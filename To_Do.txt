@@ -1,0 +1,39 @@
+To Do:
+==========
+Backend (Python/MySQL):
+*Login - authentication
+*Login - Visitor/Owner registration
+-Owner - Add animal/crop from approved list
+-Owner - Request animal/crop to pending
+-Owner - modify public/private property
+-Owner - modify commercial/non-commercial
+-Owner - modify property name
+-Owner - remove property entirely
+-Owner - add property
+-Admin - view unconfirmed properties
+-Admin - Add New Property
+-Admin - view visitor/owner list
+-Admin - view confirmed/unconfirmed properties
+-Admin - view approved/pending animals and crops
+-Visitor - view all public properties
+-Visitor - view property details
+-Visitor - visit history
+
+Frontend (HTML/CSS/JS):
+*Login page
+-Login - Visitor/Owner registration page
+-New Visitor Registration
+-Owner - profile/functionality page
+-Owner - view other owners page
+-Owner - view other property details
+-Owner - manage properties
+-Owner - add new property
+-Admin - main page
+-Admin - view unconfirmed properties
+-Admin - Add New Property
+-Admin - view visitor/owner list
+-Admin - view confirmed/unconfirmed properties
+-Admin - view approved/pending animals and crops
+-Visitor - main page
+-Visitor - detailed property view
+-Visitor - visit history
