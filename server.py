@@ -17,19 +17,7 @@ def connectDB():
 
 @app.route('/', methods=['GET'])
 def home():
-    conn = sqlite3.connect('ece4813-lab3-college.sqlite')
-    results = conn.execute("SELECT * FROM student;");
-    
-    studentlist=[]
-    for item in results:
-        student={}
-        student['ID'] = item[0]
-        student['Name'] = item[1]
-        student['LastName'] = item[2]
-        studentlist.append(student)
-    
-    conn.close()        
-    return render_template('index.html', students=studentlist)
+    pass
 
 @app.route('/login', methods=['POST'])    
  def login():
