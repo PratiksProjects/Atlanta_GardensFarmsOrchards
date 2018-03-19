@@ -18,17 +18,21 @@
         <button>create</button>
         <p class="message">Already registered? <a href="#">Sign In</a></p>
       </form>
-      <form class="login-form">
+      <form class="login-form" method="POST">
         <p><strong>Atl Garden, Farm, and Orchards</strong></p>
-        <input type="text" placeholder="username"/>
-        <input type="password" placeholder="password"/>
-       <button>login</button>
-        <!-- <p class="message">Not registered? <a href="#">Create an account</a></p> -->
-       <button>New Owner Registration</button>
-      <button>New Visitor Registration</button>
+        <input name="username" type="text" placeholder="username"/>
+        <input name="password" type="password" placeholder="password"/>
+       <button type="submit" formaction="/login">Login</button>
+       <button type="submit" formaction="/ownerRegisterPage" >New Owner Registration</button>
+      <button type="submit" formaction="/visitorRegisterPage">New Visitor Registration</button>
       </form>
     </div>
   </div>
-
+<script>
+function owner(){
+  console.log("hello");
+  window.location = window.location + "/" + "ownerRegisterPage";
+}
+</script>
 </body>
 </html>

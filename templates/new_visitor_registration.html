@@ -11,20 +11,13 @@
   <link rel="stylesheet" type="text/css" href="format_login.css">
   <div class="login-page">
     <div class="form">
-      <form class="register-form">
-        <input type="text" placeholder="name"/>
-        <input type="password" placeholder="password"/>
-        <input type="text" placeholder="email address"/>
-        <button>create</button>
-        <p class="message">Already registered? <a href="#">Sign In</a></p>
-      </form>
-      <form class="login-form">
+      <form class="login-form" action="/registerVisitor" method="POST">
         <p><strong>New Visitor Registration</strong></p>
-        <input type="email" placeholder="email"/>
-        <input type="text" placeholder="username"/>
-        <input type="password" placeholder="password"/>
+        <input name="email" type="email" placeholder="email"/>
+        <input name="username" type="text" placeholder="username"/>
+        <input name="password" type="password" placeholder="password"/>
         <input type="password" placeholder="confirm password"/>
-       <button>Register Visitor</button>
+       <button type="submit">Register Visitor</button>
         <!-- <p class="message">Not registered? <a href="#">Create an account</a></p> -->
        <button>Cancel</button>
       <!-- <button>New Visitor Registration</button> -->

@@ -19,43 +19,59 @@ def connectDB():
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    #return render_template('login_new.html')
+    return render_template('login_new.html')
 
 @app.route('/login', methods=['POST'])
 def login():
     #payload = request.form
-    msg = {'password':'asdf'}
     print(request)
     conn = connectDB()
-    if(False):
-        register_owner(conn)
-    else:
-        register_visitor(conn)
+
     return redirect('/')
 
-def register_owner(conn, msg):
-    usertype = 'Owner'
+@app.route('/ownerRegisterPage', methods=['POST'])
+def ownerRegisterPage():
+    return render_template("new_owner_registration.html")
+
+@app.route('/visitorRegisterPage', methods=['POST'])
+def visitorRegisterPage():
+    return render_template("new_visitor_registration.html")
+
+
+@app.route('/registerOwner', methods=['POST'])
+def register_owner():
+    conn = connectDB()
+    msg = request.form
     try:
         with conn.cursor() as cur:
-            sql = "INSERT INTO 'User' ('Username', 'Email', 'Password', 'UserType') VALUES (%s, %s, %s, %s)"
-            cursor.execute(sql, ('Tester','test@test.com',hash(msg['password']), usertype ))
+            sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
+            cur.execute(sql, (msg['username'],msg['email'],hash(msg['password']),'Owner'))
 
-        connection.commit()
+        conn.commit()
         #add property stuff also
 
     finally:
-        connection.close()
+        conn.close()
+        return redirect("/")
 
-def register_visitor(conn, msg):
-    usertype = 'Visitor'
+@app.route('/registerVisitor', methods=['POST'])
+def register_visitor():
+    conn = connectDB()
+    msg = request.form
+    password = str(hash(msg['password']))
+    print(password)
     try:
         with conn.cursor() as cur:
-            sql = "INSERT INTO 'User' ('Username', 'Email', 'Password', 'UserType') VALUES (%s, %s, %s, %s)"
-            cursor.execute(sql, ('Tester','test@test.com',hash(msg['password']), usertype ))
+            sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
+            cur.execute(sql, (msg['username'],msg['email'],password,'Visitor'))
 
-        connection.commit()
+        conn.commit()
+    except Exception as e:
+        print(e)
     finally:
-        connection.close()
+        conn.close()
+        return redirect("/")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
