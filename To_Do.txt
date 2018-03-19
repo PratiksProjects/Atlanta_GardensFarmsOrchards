@@ -21,7 +21,7 @@ Backend (Python/MySQL):
 
 Frontend (HTML/CSS/JS):
 *Login page
--Login - Visitor/Owner registration page
+*Login - Visitor/Owner registration page
 -New Visitor Registration
 -Owner - profile/functionality page
 -Owner - view other owners page
