@@ -22,7 +22,7 @@ Backend (Python/MySQL):
 Frontend (HTML/CSS/JS):
 *Login page
 *Login - Visitor/Owner registration page
--New Visitor Registration
+*New Visitor Registration
 -Owner - profile/functionality page
 -Owner - view other owners page
 -Owner - view other property details

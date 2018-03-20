@@ -8,6 +8,8 @@ from credentials import login, temp_login
 
 app = Flask(__name__, static_url_path="")
 
+profile_pages = {"Admin":"admin.html","Visitor":"visitor.html","Owner":"owner.html"}
+
 def connectDB():
     connection = pymysql.connect(host= temp_login['SERVER_ADDRESS'],
                                  user= temp_login['USERNAME'],
@@ -24,20 +26,52 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-    #payload = request.form
-    print(request)
+    msg = request.form
+    sql = "SELECT * from User WHERE Username = %s"
     conn = connectDB()
 
-    return redirect('/')
+    with conn.cursor() as cur:
+        cur.execute(sql, (msg['username'],))
+        results = cur.fetchone()
+
+    conn.close()
+    if(str(results['Password']) ==  str(hash(msg['password']))):
+        ##change to profile pages once done
+        user_type = results['UserType']
+        resp = make_response(redirect("/"+ user_type))
+        resp.set_cookie('type', user_type)
+        return resp
+    else:
+        return redirect("/")
+
+@app.route('/Visitor', methods=['GET'])
+def visitor_profile():
+    if(request.cookies.get('type') == 'Visitor'):
+        return render_template("visitor.html")
+    else:
+        return redirect('/')
+
+@app.route('/Owner', methods=['GET'])
+def owner_profile():
+    if(request.cookies.get('type') == 'Owner'):
+        return render_template("owner.html")
+    else:
+        return redirect('/')
+
+@app.route('/Admin', methods=['GET'])
+def admin_profile():
+    if(request.cookies.get('type') == 'Admin'):
+        return render_template("Admin.html")
+    else:
+        return redirect('/')
 
 @app.route('/ownerRegisterPage', methods=['POST'])
-def ownerRegisterPage():
+def owner_register_page():
     return render_template("new_owner_registration.html")
 
 @app.route('/visitorRegisterPage', methods=['POST'])
-def visitorRegisterPage():
+def visitor_register_page():
     return render_template("new_visitor_registration.html")
-
 
 @app.route('/registerOwner', methods=['POST'])
 def register_owner():
@@ -50,7 +84,6 @@ def register_owner():
 
         conn.commit()
         #add property stuff also
-
     finally:
         conn.close()
         return redirect("/")
@@ -60,7 +93,6 @@ def register_visitor():
     conn = connectDB()
     msg = request.form
     password = str(hash(msg['password']))
-    print(password)
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
