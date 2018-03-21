@@ -1,11 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-/*.title
+.details
 {
-
-	background: red;
-	color:blue;
-}*/
+text-align: left;
+	/*background: red;
+	color:blue;*/
+}
 
 .centerImg
 {
@@ -14,17 +14,7 @@
   margin: auto;
 }
 
-.outsideFig
-{
-  position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  max-width: 720px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
+
 
 .outsideFig 
 {

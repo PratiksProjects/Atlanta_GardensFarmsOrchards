@@ -9,21 +9,16 @@
 
 .centerImg
 {
-  width: 360px;
+  /*width: 360px;*/
+  width: 100%;
   padding: 8% 0 0;
   margin: auto;
 }
 
-.outsideFig
+.init_page
 {
-  position: relative;
-  z-index: 1;
-  background: #FFFFFF;
-  max-width: 720px;
-  margin: 0 auto 100px;
-  padding: 45px;
-  text-align: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+font-size: 25px;
 }
 
 .outsideFig 
@@ -66,10 +61,74 @@
   cursor: pointer;
 }
 
+.outsideFig table,td,th
+{
+background: white;
+width: 100%
+font-family: "Roboto", sans-serif;
+text-transform: uppercase;
+outline: 0;
+ border: 20px,20px,20px,20px;
+ margin: auto, auto, auto, auto;
+font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  position: center;
+   border: 1px solid black;
+   border-collapse: collapse;
+    padding: 15px;
+    text-align: center;
+     border-spacing: 5px;
+}
+
+th
+{
+background: #ccccff;
+width: 100%
+font-family: "Roboto", sans-serif;
+text-transform: uppercase;
+outline: 0;
+ border: 20px,20px,20px,20px;
+ margin: auto, auto, auto, auto;
+font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  position: center;
+   border: 1px solid black;
+   border-collapse: collapse;
+    padding: 15px;
+    text-align: center;
+     border-spacing: 5px;
+}
+
 .dropdown 
 {
     position: relative;
     display: inline-block;
+}
+
+.tab { 
+      position: sticky;
+       display:inline-block; 
+       margin-left: 220px; 
+}
+
+#intro_prop
+{
+
+  background:   #89C16A; /* fallback for old browsers */
+  /*background: -webkit-linear-gradient(right, #76b852, #8DC26F);*/
+  /*background: -moz-linear-gradient(right, #76b852, #8DC26F);*/
+  /*background: -o-linear-gradient(right, #76b852, #8DC26F);*/
+  /*background: linear-gradient(to left, #76b852, #8DC26F);*/
+  font-family: "Roboto", sans-serif;
+  /*-webkit-font-smoothing: antialiased;*/
+  /*-moz-osx-font-smoothing: grayscale; */
+  border: none;
+  font-size: 20px;
+
 }
 
  select
