@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="new_owner_reg.css">
-
+	<script src="passwordCheck.js"></script>
 	<title>New Owner Registration</title>
-	
+
 </head>
 
 
@@ -16,79 +16,79 @@
 
 	<div class="centerImg">
 
-		<form class="outsideFig">	
+		<form class="outsideFig" method="POST" id="myForm">
 			<p class=title><strong>New Owner Registration</strong></p>
 
 			<div>
-				<label> <input type="email" placeholder="email*" required></label>
+				<label> <input type="email" placeholder="email*" name="email"  required></label>
 			</div>
 
 			<div>
-			<label> <input type="text" placeholder="username*" required></label>
+			<label> <input type="text" placeholder="username*" name="username"  required></label>
 		    </div>
 
 		    <div>
-			<label><input type="password" placeholder="password*" required></label>
+			<label><input type="password" placeholder="password*" name="password" minlength="8" required></label>
 			</div>
 
 			<div>
-				<label><input type="password" placeholder="confirm password*" required></label>
+				<label><input type="password" placeholder="confirm password*" name="confirmPassword" minlength="8" required></label>
 			</div>
 
 			<div>
-			<label><input type="text" placeholder="property name*" required></label>
+			<label><input type="text" placeholder="property name*" name="propertyName" required></label>
 			</div>
 
 			<div>
-			<label><input type="text" placeholder="street address*" required></label>
+			<label><input type="text" placeholder="street address*" name="streetAddress" required></label>
 			</div>
 
 			<div>
-			<label><input type="text" placeholder="City*" required></label>
-			<label><input type="text" placeholder="Zip*" required></label>
-			<label><input type="text" placeholder="Acres*" required></label>
+			<label><input type="text" placeholder="City*" name="city" required></label>
+			<label><input type="text" placeholder="Zip*" name="zip" required></label>
+			<label><input type="text" placeholder="Acres*" name="acres" required></label>
 			</div>
 
 			<div class="dropdown">
 
-				
-					<select name="propertyType" required> 
+
+					<select name="propertyType" required>
 							<option value="Property Type" disabled selected hidden>Property Type*</option>
 							<option value="Farm">Farm</option>
 							<option value="Garden">Garden</option>
 							<option value="Crop">Crop</option>
 					</select>
 
-					
-					<select name="animalType" required="" > 
+
+					<select name="animalType" required="" >
 							<option value="animalType" disabled selected hidden>Animal Type*</option>
 							<option value="Cows">Cows</option>
 							<option value="Pigs">Pigs</option>
 					</select>
 
-					
-					<select name="cropType" required=""> 
+
+					<select name="cropType" required="">
 							<option value="cropType" disabled selected hidden>Crop Type*</option>
 							<option value="Tomatoes">Tomatoes</option>
 							<option value="Corn">Corn</option>
 					</select>
 
-				
+
 			</div>
 
 
 			<div class="dropdown">
-				
-				<select name="isPublic" required> 
+
+				<select name="isPublic" required>
 						<option value="isPublic" disabled selected hidden>Is Public?*</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
 				</select>
 
-			
-				
-				<select name="isComercial" required> 
-						<option value="isComercial" disabled selected hidden>Is Comercial?*</option>
+
+
+				<select name="isCommercial" required>
+						<option value="isCommercial" disabled selected hidden>Is Commercial?*</option>
 						<option value="Yes">Yes</option>
 						<option value="No">No</option>
 				</select>
@@ -97,15 +97,15 @@
 
 
 
-			
-			
 
-			<button>Register Owner</button>
+
+
+			<button type="submit" formaction="/registerOwner">Register Owner</button>
 			<button>Cancel</button>
 
-		</form>	
+		</form>
 	</div>
-	
+
 
 </body>
 </html>
