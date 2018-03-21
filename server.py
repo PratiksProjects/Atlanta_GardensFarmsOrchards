@@ -10,6 +10,12 @@ app = Flask(__name__, static_url_path="")
 
 profile_pages = {"Admin":"admin.html","Visitor":"visitor.html","Owner":"owner.html"}
 
+def yesno_to_bool(str):
+    if(str.lower() == "yes"):
+        return 1
+    else:
+        return 0
+
 def connectDB():
     connection = pymysql.connect(host= temp_login['SERVER_ADDRESS'],
                                  user= temp_login['USERNAME'],
@@ -46,6 +52,7 @@ def login():
 
 @app.route('/Visitor', methods=['GET'])
 def visitor_profile():
+    print(request.cookies)
     if(request.cookies.get('type') == 'Visitor'):
         return render_template("visitor.html")
     else:
@@ -83,7 +90,15 @@ def register_owner():
             cur.execute(sql, (msg['username'],msg['email'],hash(msg['password']),'Owner'))
 
         conn.commit()
-        #add property stuff also
+        isPublic = yesno_to_bool(msg['isPublic'])
+        isCommercial = yesno_to_bool(msg['isCommercial'])
+        with conn.cursor() as cur:
+            sql = "INSERT INTO Property (Name, Size, StreetAddress, City, Zip, IsPublic, IsCommercial, PropertyType, OwnedBy) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cur.execute(sql, (msg['propertyName'], int(msg['acres']),msg['streetAddress'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], msg['username']))
+
+        conn.commit()
+    except Exception as e:
+        print(e)
     finally:
         conn.close()
         return redirect("/")
@@ -99,6 +114,7 @@ def register_visitor():
             cur.execute(sql, (msg['username'],msg['email'],password,'Visitor'))
 
         conn.commit()
+
     except Exception as e:
         print(e)
     finally:
