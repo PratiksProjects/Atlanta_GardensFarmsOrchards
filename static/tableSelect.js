@@ -29,7 +29,6 @@ function myFunction() {
   }
 }
 //above works
-console.log("test");
 var visit = 0;
 function sortTable() {
   visit = 1 - visit;
@@ -51,10 +50,10 @@ function sortTable() {
       one from current row and one from the next:*/
       x = rows[i].getElementsByTagName("td")[10];
       y = rows[i + 1].getElementsByTagName("td")[10];
-      //check if the two rows should switch place:
-      if (visit = 0){
       console.log(x.textContent);
       console.log(y.textContent);
+      //check if the two rows should switch place:
+      if (visit = 0){
       if (x.textContent > y.textContent) {
         //if so, mark as a switch and break the loop:
         shouldSwitch= true;
