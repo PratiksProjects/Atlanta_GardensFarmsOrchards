@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="admin_property_management.css">
 
 	<title>New Owner Registration</title>
-	
+
 </head>
 
 
@@ -37,123 +37,34 @@
 				<th>Size</th>
 				<th>Type</th>
 				<th>Public</th>
-				<th>Comercial</th>
+				<th>Commercial</th>
 				<th>ID</th>
 				<th>isValid</th>
 				<th>Visits</th>
 				<th>Avg. Ratings</th>
 
 			</tr>
+        {% for p in plist %}
+  			<tr>
+  				<td>{{p['Name']}}</td>
+  				<td>{{p['Street']}}</td>
+  				<td>{{p['City']}}</td>
+  				<td>{{p['Zip']}}</td>
+  				<td>{{p['Size']}}</td>
+  				<td>{{p['PropertyType']}}</td>
+  				<td>{{p['IsPublic']}}</td>
+  				<td>{{p['IsCommercial']}}</td>
+  				<td>{{p['ID']}}</td>
+  				<td>{{p['ApprovedBy']}}</td>
+  				<td>{{p['Visits']}}</td>
+  				<td>{{p['AvgRating']}}</td>
 
-			<tr>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-
-			</tr>
-
+  			</tr>
+      {% endfor %}
 
 		</table>
-
-	<!-- 	<form class="outsideFig">	
-			<p class=title><strong>New Owner Registration</strong></p>
-
-			<div>
-				<label> <input type="email" placeholder="email*" required></label>
-			</div>
-
-			<div>
-			<label> <input type="text" placeholder="username*" required></label>
-		    </div>
-
-		    <div>
-			<label><input type="password" placeholder="password*" required></label>
-			</div>
-
-			<div>
-				<label><input type="email" placeholder="confirm password*" required></label>
-			</div>
-
-			<div>
-			<label><input type="text" placeholder="property name*" required></label>
-			</div>
-
-			<div>
-			<label><input type="text" placeholder="street address*" required></label>
-			</div>
-
-			<div>
-			<label><input type="text" placeholder="City*" required></label>
-			<label><input type="text" placeholder="Zip*" required></label>
-			<label><input type="text" placeholder="Acres*" required></label>
-			</div>
-
-			<div class="dropdown">
-
-				
-					<select name="propertyType" required> 
-							<option value="Property Type" disabled selected hidden>Property Type*</option>
-							<option value="Farm">Farm</option>
-							<option value="Garden">Garden</option>
-							<option value="Crop">Crop</option>
-					</select>
-
-					
-					<select name="animalType" required="" > 
-							<option value="animalType" disabled selected hidden>Animal Type*</option>
-							<option value="Cows">Cows</option>
-							<option value="Pigs">Pigs</option>
-					</select>
-
-					
-					<select name="cropType" required=""> 
-							<option value="cropType" disabled selected hidden>Crop Type*</option>
-							<option value="Tomatoes">Tomatoes</option>
-							<option value="Corn">Corn</option>
-					</select>
-
-				
-			</div>
-
-
-			<div class="dropdown">
-				
-				<select name="isPublic" required> 
-						<option value="isPublic" disabled selected hidden>Is Public?*</option>
-						<option value="Yes">Yes</option>
-						<option value="No">No</option>
-				</select>
-
-			
-				
-				<select name="isComercial" required> 
-						<option value="isComercial" disabled selected hidden>Is Comercial?*</option>
-						<option value="Yes">Yes</option>
-						<option value="No">No</option>
-				</select>
-
-			</div>
-
-
-
-			
-			
-
-			<button>Register Owner</button>
-			<button>Cancel</button>
-
-		</form>	 -->
 	</div>
-	
+
 
 </body>
 </html>

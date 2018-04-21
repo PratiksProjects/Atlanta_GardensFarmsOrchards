@@ -56,6 +56,7 @@ def login():
             user_type = results['UserType']
             resp = make_response(redirect("/"+ user_type))
             resp.set_cookie('type', user_type)
+            resp.set_cookie('username', msg['username'])
             return resp
     else:
         return redirect("/")
@@ -70,8 +71,16 @@ def visitor_profile():
 
 @app.route('/OWNER', methods=['GET'])
 def owner_profile():
+    name = request.cookies.get('username')
+    conn = connectDB()
+    sql = "SELECT *,count(ID) as Visits, avg(Rating) as AvgRating from Property JOIN Visit ON Property.ID = Visit.PropertyID AND Property.Owner = %s Group By ID"
+    with conn.cursor() as cur:
+        cur.execute(sql, (name,))
+        results = cur.fetchall()
+    conn.close()
+    plist=[]
     if(request.cookies.get('type') == 'OWNER'):
-        return render_template("owner.html")
+        return render_template("admin_property_management.html", plist=results)
     else:
         return redirect('/')
 
