@@ -90,6 +90,13 @@ def owner_register_page():
 def visitor_register_page():
     return render_template("new_visitor_registration.html")
 
+@app.route('/logout', methods=['POST'])
+def logout_user():
+    print("working")
+    resp = make_response(redirect("/"))
+    resp.set_cookie('type', expires=0)
+    return resp
+
 @app.route('/registerOwner', methods=['POST'])
 def register_owner():
     conn = connectDB()
