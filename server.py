@@ -10,7 +10,7 @@ import hashlib
 
 app = Flask(__name__, static_url_path="")
 
-profile_pages = {"Admin":"admin.html","Visitor":"visitor.html","Owner":"owner.html"}
+profile_pages = {"ADMIN":"admin.html","VISITOR":"visitor.html","OWNER":"owner.html"}
 
 def random_with_N_digits(n):
     range_start = 10**(n-1)
@@ -49,8 +49,9 @@ def login():
         results = cur.fetchone()
 
     conn.close()
-    if(results not None):
-        if(str(results['Password']) ==  str(h.update(msg['password']))):
+    if(results is not None):
+        h.update(msg['password'])
+        if(str(results['Password']) ==  str(h.hexdigest())):
             ##change to profile pages once done
             user_type = results['UserType']
             resp = make_response(redirect("/"+ user_type))
@@ -59,24 +60,24 @@ def login():
     else:
         return redirect("/")
 
-@app.route('/Visitor', methods=['GET'])
+@app.route('/VISITOR', methods=['GET'])
 def visitor_profile():
     print(request.cookies)
-    if(request.cookies.get('type') == 'Visitor'):
+    if(request.cookies.get('type') == 'VISITOR'):
         return render_template("visitor.html")
     else:
         return redirect('/')
 
-@app.route('/Owner', methods=['GET'])
+@app.route('/OWNER', methods=['GET'])
 def owner_profile():
-    if(request.cookies.get('type') == 'Owner'):
+    if(request.cookies.get('type') == 'OWNER'):
         return render_template("owner.html")
     else:
         return redirect('/')
 
-@app.route('/Admin', methods=['GET'])
+@app.route('/ADMIN', methods=['GET'])
 def admin_profile():
-    if(request.cookies.get('type') == 'Admin'):
+    if(request.cookies.get('type') == 'ADMIN'):
         return render_template("admin_functionality.html")
     else:
         return redirect('/')
@@ -97,7 +98,7 @@ def register_owner():
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
-            cur.execute(sql, (msg['username'],msg['email'],h.update(msg['password']),'Owner'))
+            cur.execute(sql, (msg['username'],msg['email'],h.update(msg['password']).hexdigest(),'Owner'))
 
         conn.commit()
         isPublic = yesno_to_bool(msg['isPublic'])
@@ -118,7 +119,7 @@ def register_visitor():
     h = hashlib.md5()
     conn = connectDB()
     msg = request.form
-    password = str(h.update(msg['password']))
+    password = str(h.update(msg['password']).hexdigest())
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
