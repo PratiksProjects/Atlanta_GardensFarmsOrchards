@@ -21,7 +21,7 @@
 font-size: 25px;
 }
 
-.outsideFig
+.outsideFig 
 {
   position: relative;
   z-index: 1;
@@ -32,7 +32,7 @@ font-size: 25px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
-.outsideFig input
+.outsideFig input 
 {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -44,7 +44,7 @@ font-size: 25px;
   box-sizing: border-box;
   font-size: 14px;
 }
-.outsideFig button
+.outsideFig button 
 {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -103,16 +103,16 @@ font-size: 14px;
      border-spacing: 5px;
 }
 
-.dropdown
+.dropdown 
 {
     position: relative;
     display: inline-block;
 }
 
-.tab {
+.tab { 
       position: sticky;
-       display:inline-block;
-       margin-left: 220px;
+       display:inline-block; 
+       margin-left: 220px; 
 }
 
 #intro_prop
@@ -151,7 +151,7 @@ font-size: 14px;
     z-index: 1;*/
 }
 
-/*.dropdown:hover .dropdown-content
+/*.dropdown:hover .dropdown-content 
 {
     display: block;
 }*/
@@ -167,12 +167,12 @@ font-size: 14px;
   color: #b3b3b3;
   font-size: 12px;
 }
-.outsideFig .message a
+.outsideFig .message a 
 {
   color: #4CAF50;
   text-decoration: none;
 }
-.outsideFig .register-form
+.outsideFig .register-form 
 {
   display: none;
 }
@@ -190,7 +190,7 @@ font-size: 14px;
   position:relative;
   width: 100px;
   height: 70px;
-
+  
 }
 
 body
@@ -203,5 +203,5 @@ body
   background: linear-gradient(to left, #76b852, #8DC26F);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;      
 }
