@@ -4,11 +4,18 @@ from flask import Flask, jsonify, abort, request, make_response, url_for
 from flask import render_template, redirect
 import sys
 import pymysql.cursors
-from credentials import login, temp_login
+from credentials import temp_login
+from random import randint
+import hashlib
 
 app = Flask(__name__, static_url_path="")
 
 profile_pages = {"Admin":"admin.html","Visitor":"visitor.html","Owner":"owner.html"}
+
+def random_with_N_digits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return randint(range_start, range_end)
 
 def yesno_to_bool(str):
     if(str.lower() == "yes"):
@@ -33,6 +40,7 @@ def home():
 @app.route('/login', methods=['POST'])
 def login():
     msg = request.form
+    h= hashlib.md5()
     sql = "SELECT * from User WHERE Username = %s"
     conn = connectDB()
 
@@ -41,12 +49,13 @@ def login():
         results = cur.fetchone()
 
     conn.close()
-    if(str(results['Password']) ==  str(hash(msg['password']))):
-        ##change to profile pages once done
-        user_type = results['UserType']
-        resp = make_response(redirect("/"+ user_type))
-        resp.set_cookie('type', user_type)
-        return resp
+    if(results not None):
+        if(str(results['Password']) ==  str(h.update(msg['password']))):
+            ##change to profile pages once done
+            user_type = results['UserType']
+            resp = make_response(redirect("/"+ user_type))
+            resp.set_cookie('type', user_type)
+            return resp
     else:
         return redirect("/")
 
@@ -68,7 +77,7 @@ def owner_profile():
 @app.route('/Admin', methods=['GET'])
 def admin_profile():
     if(request.cookies.get('type') == 'Admin'):
-        return render_template("Admin.html")
+        return render_template("admin_functionality.html")
     else:
         return redirect('/')
 
@@ -83,18 +92,19 @@ def visitor_register_page():
 @app.route('/registerOwner', methods=['POST'])
 def register_owner():
     conn = connectDB()
+    h = hashlib.md5()
     msg = request.form
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
-            cur.execute(sql, (msg['username'],msg['email'],hash(msg['password']),'Owner'))
+            cur.execute(sql, (msg['username'],msg['email'],h.update(msg['password']),'Owner'))
 
         conn.commit()
         isPublic = yesno_to_bool(msg['isPublic'])
         isCommercial = yesno_to_bool(msg['isCommercial'])
         with conn.cursor() as cur:
-            sql = "INSERT INTO Property (Name, Size, StreetAddress, City, Zip, IsPublic, IsCommercial, PropertyType, OwnedBy) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            cur.execute(sql, (msg['propertyName'], int(msg['acres']),msg['streetAddress'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], msg['username']))
+            sql = "INSERT INTO Property (ID, Name, Size, Street, City, Zip, IsPublic, IsCommercial, PropertyType, Owner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cur.execute(sql, (random_with_N_digits(5), msg['propertyName'], int(msg['acres']),msg['streetAddress'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], msg['username']))
 
         conn.commit()
     except Exception as e:
@@ -105,9 +115,10 @@ def register_owner():
 
 @app.route('/registerVisitor', methods=['POST'])
 def register_visitor():
+    h = hashlib.md5()
     conn = connectDB()
     msg = request.form
-    password = str(hash(msg['password']))
+    password = str(h.update(msg['password']))
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
