@@ -39,8 +39,20 @@ function deleteVisitor() {
     if(v == null){
       alert("Please select a row");
     } else {
-      console.log(v);
-      //code for delet visitor
+      document.cookie = "VName=" + v;
+      alert("The visitor account has been deleted");
+      window.location.href ="http://localhost:5000/deleteVacc";
+    }
+}
+
+function deleteLog() {
+    var v = $("#visitorTable tr.selected").attr('id');
+    if(v == null){
+      alert("Please select a row");
+    } else {
+      document.cookie = "VName=" + v;
+      alert("The visitor log has been deleted");
+      window.location.href ="http://localhost:5000/deleteVlog";
     }
 }
 

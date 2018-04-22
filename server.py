@@ -233,9 +233,9 @@ def visitor_list():
     conn.close()
     return render_template("all_visitors_in_system.html", vlist=vlist)
 
-@app.route('/deleteVacc', methods=['POST'])
+@app.route('/deleteVacc', methods=['GET'])
 def delete_vacc():
-    name = request.form["username"]
+    name = request.cookies.get('VName')
     sql = "DELETE FROM User WHERE Username = %s"
     conn = connectDB()
 
@@ -245,9 +245,9 @@ def delete_vacc():
     conn.close()
     return redirect("/ADMIN")
 
-@app.route('/deleteVLog', methods=['POST'])
+@app.route('/deleteVlog', methods=['GET'])
 def delete_vlog():
-    name = request.form["username"]
+    name = request.cookies.get('VName')
     sql = "DELETE FROM Visit WHERE Username = %s"
     conn = connectDB()
 
