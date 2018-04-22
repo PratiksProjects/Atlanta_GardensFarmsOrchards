@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
 
-	<title>New Owner Registration</title>
+	<title>All Visitors in System</title>
 	
 </head>
 
@@ -25,21 +25,15 @@
 		            main page
 		        </td> -->
 		        <td id="intro_prop">
-		        	<strong>Unconfirmed Properties: </strong>
+		        	<strong>All Visitors in System: </strong>
 		        </td>
     		</tr>
 
 			<tr>
-				<th>Name</th>
-				<th>Address</th>
-				<th>City</th>
-				<th>Zip</th>
-				<th>Size</th>
-				<th>Type</th>
-				<th>Public</th>
-				<th>Comercial</th>
-				<th>ID</th>
-				<th>Owner</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Logged Visits</th>
+				
 				
 
 			</tr>
@@ -48,13 +42,7 @@
 				<td>fsdf</td>
 				<td>fsdf</td>
 				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
+				
 			
 			</tr>
 
@@ -67,8 +55,8 @@
 					<pre></pre>
 
 
-					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
-							<option value="Search_by" disabled selected hidden>Search by...*</option>
+					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px">
+							<option value="Search_by" disabled selected hidden>Search by...</option>
 							<option value="Farm">Name</option>
 							<option value="Garden">Address</option>
 							<option value="Crop">City</option>
@@ -84,11 +72,13 @@
 
 				<pre></pre>
 				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>	
+				<button id="delete_visitor_account" style=" position: relative;  left: 400px; width:110px">Delete Visitor Account</button>
+
 
 				<pre></pre>
-				<button id="Search Properties" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
+				<button id="Search Visitors" style=" position: relative;  left: 200px; width:110px">Search Visitors</button>
 
-				<button id="Manage_Selected_Property" style="position: relative ; width: 110px;	left: 400px">Manage Selected Property</button>
+				<button id="delete_log_history" style="position: relative ; width: 110px;	left: 400px">Delete Log History</button>
 
 				<button id="Back" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button>
 

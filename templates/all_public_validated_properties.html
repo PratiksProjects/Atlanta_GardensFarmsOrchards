@@ -7,7 +7,7 @@
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
 
-	<title>New Owner Registration</title>
+	<title>All public, validated properties</title>
 	
 </head>
 
@@ -15,7 +15,7 @@
 <body>
 
 	<div class="centerImg">
-		<!-- <p align="center" class="init_page"><strong>Welcome Owner</strong></p> -->
+		<p align="center" class="init_page"><strong>Welcome Visitor</strong></p>
 
 
 		<!-- <div><p class="init_page"><span class="tab"><strong>Your Properties:</strong></span></p></div> -->
@@ -25,7 +25,7 @@
 		            main page
 		        </td> -->
 		        <td id="intro_prop">
-		        	<strong>Unconfirmed Properties: </strong>
+		        	<strong>All public, validated properties: </strong>
 		        </td>
     		</tr>
 
@@ -37,9 +37,11 @@
 				<th>Size</th>
 				<th>Type</th>
 				<th>Public</th>
-				<th>Comercial</th>
+				<th>Commercial</th>
 				<th>ID</th>
-				<th>Owner</th>
+				<th>Visits</th>
+				<th>Avg. Rating</th>
+				
 				
 
 			</tr>
@@ -55,6 +57,8 @@
 				<td>fsdf</td>
 				<td>fsdf</td>
 				<td>fsdf</td>
+				<td>fsdf</td>
+				
 			
 			</tr>
 
@@ -67,8 +71,8 @@
 					<pre></pre>
 
 
-					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
-							<option value="Search_by" disabled selected hidden>Search by...*</option>
+					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px">
+							<option value="Search_by" disabled selected hidden>Search by...</option>
 							<option value="Farm">Name</option>
 							<option value="Garden">Address</option>
 							<option value="Crop">City</option>
@@ -84,13 +88,15 @@
 
 				<pre></pre>
 				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>	
+				<button id="view_property" style=" position: relative;  left: 400px; width:110px">View Property</button>
+
 
 				<pre></pre>
-				<button id="Search Properties" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
+				<button id="search_properties" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
 
-				<button id="Manage_Selected_Property" style="position: relative ; width: 110px;	left: 400px">Manage Selected Property</button>
+				<button id="view_visit_history" style="position: relative ; width: 110px;	left: 400px">View Visit History</button>
 
-				<button id="Back" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button>
+				<button id="log_out" style="position: relative ; width: 110px;	left: 600px; background: red">Log Out</button>
 
 
 	</div>

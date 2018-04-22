@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
+
+	<title>Manage Property</title>
+
+</head>
+
+
+<body>
+
+	<div class="centerImg">
+		<p align="center" class="init_page"><strong>Manage {{result["Name"]}}</strong></p>
+
+
+		<label id="name" style="  position: relative; left: 200px"><strong>Name: </strong></label>
+		<input type="text" name="farm_name" value="{{result["Name"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
+
+		<label id="type" style="position: relative; left: 400px"><strong>Type: </strong></label>
+
+		<input type="text" name="type_farm" value="{{result["PropertyType"]}}" style="position: relative; left: 410px; height: 30px; width: 200px">
+
+		<pre></pre>
+
+		<label id="address" style="  position: relative; left: 200px"><strong>Address: </strong></label>
+		<input type="text" value="{{result["Street"]}}" name="address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+
+		<label id="is_public" style="  position: relative; left: 400px"><strong>Public: </strong></label>
+		<select name="is_public" id="is_public" style="position: relative; left: 410px; height: 30px;" >
+
+			<option value="False">False</option>
+			<option value="True">True</option>
+
+
+		</select>
+
+
+		<pre></pre>
+
+
+		<label id="city" style="  position: relative; left: 200px"><strong>City: </strong></label>
+		<input type="text" value="{{result["City"]}}" name="city_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+
+		<label id="is_commercial" style="  position: relative; left: 400px"><strong>Commercial: </strong></label>
+		<select name="is_commercial_selector" id="is_commercial_selector" style="position: relative; left: 410px; height: 30px" >
+
+			<option value="False">False</option>
+			<option value="True">True</option>
+
+
+		</select>
+
+		<pre></pre>
+
+		<label id="zip" style="  position: relative; left: 200px"><strong>Zip: </strong></label>
+		<input type="text" name="zip_input" value="{{result["Zip"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
+
+		<label id="ID" style="  position: relative; left: 400px"><strong>ID: {{result["ID"]}}</strong></label>
+
+		<pre></pre>
+
+		<label id="size_acres" style="  position: relative; left: 200px"><strong>Size(acres): </strong></label>
+		<input type="text" value="{{result["Size"]}}"name="size_address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+
+		<!-- Here goes until animals. I need to create the remaining ones now -->
+
+		<pre></pre>
+		<pre></pre>
+
+		<label id="animals_check" style="  position: relative; left: 200px"><strong>Animals: </strong></label>
+
+		<select name="animal_selector" id="animal_selector" style="position: relative; left: 210px; height: 30px" >
+      {% for animal in animals %}
+			<option value="{{animal["Name"]}}">{{animal["Name"]}}</option>
+      {% endfor %}
+
+		</select>
+
+		<label id="crops_check" style="  position: relative; left: 500px"><strong>Crops: </strong></label>
+
+		<select name="crops_selector" id="crops_selector" style="position: relative; left: 510px; height: 30px" >
+
+      {% for crop in crops %}
+			<option value="{{crop["Name"]}}">{{crop["Name"]}}</option>
+      {% endfor %}
+
+		</select>
+
+		<pre></pre>
+
+		<label id="add_new_animal" style="  position: relative; left: 200px"><strong>Add new Animal: </strong></label>
+
+		<select  name="approved_animal_selector" id="approved_animal_selector" style="position: relative; left: 210px; height: 30px">
+      <option value="select_approved_animal" disabled selected hidden>Select approved animal...</option>
+      {% for animal in animals_approved %}
+      <option value="{{animal["Name"]}}">{{animal["Name"]}}</option>
+      {% endfor %}
+
+		</select>
+
+		<label id="add_new_crop" style="  position: relative; left: 330px"><strong>Add new crop: </strong></label>
+
+		<select  name="approved_crop_selector" id="approved_ccrop_selector" style="position: relative; left: 340px; height: 30px">
+
+			<option value="select_approved_animal" disabled selected hidden>Select approved crop...</option>
+      {% for crop in crops_approved %}
+      <option value="{{crop["Name"]}}">{{crop["Name"]}}</option>
+      {% endfor %}
+
+		</select>
+
+		<pre></pre>
+
+		<button id="add_animal_button" style="position: relative; left: 330px">Add Animal to Property</button>
+
+		<button  id="add_crop_button" style="position: relative; left: 530px">Add Crop to Property</button>
+
+		<pre></pre>
+
+		<button  id="save_changes_button" style="position: relative; left: 500px"><strong>Save Changes</strong> (confirm property)</button>
+
+		<pre></pre>
+
+		<button  id="back_button" style="position: relative; left: 500px"><strong>Back</strong> (Do not Save or Confirm)</button>
+
+		<button  id="delete_property" style="position: relative; left: 700px; background: red"><strong> Delete Property</strong></button>
+
+
+
+
+<!--
+					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
+							<option value="Search_by" disabled selected hidden>Search by...*</option>
+							<option value="Farm">Name</option>
+							<option value="Garden">Address</option>
+							<option value="Crop">City</option>
+							<option value="Crop">Zip</option>
+							<option value="Crop">Size</option>
+							<option value="Crop">Type</option>
+							<option value="Crop">Public</option>
+							<option value="Crop">Commercial</option>
+							<option value="Crop">ID</option>
+							<option value="Crop">City</option>
+
+					</select>
+
+				<pre></pre>
+				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
+
+				<pre></pre>
+				<button id="Search Properties" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
+
+				<button id="Manage_Selected_Property" style="position: relative ; width: 110px;	left: 400px">Manage Selected Property</button>
+
+				<button id="Back" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button> -->
+
+
+	</div>
+
+
+
+
+</body>

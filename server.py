@@ -149,5 +149,38 @@ def register_visitor():
         conn.close()
         return redirect("/")
 
+@app.route('/manageProperty', methods=['GET'])
+def manage_property():
+    pid = request.cookies.get('PropertyID')
+    sql = "SELECT * from Property WHERE ID = %s"
+    sql2 = "SELECT * from FarmItem WHERE IsApproved = 1 AND Type = 'ANIMAL'"
+    sql3 = "SELECT * from FarmItem WHERE IsApproved = 1 AND Type != 'ANIMAL'"
+    sql4 = "SELECT * from Has JOIN FarmItem On FarmItem.Name=Has.ItemName AND PropertyID=%s AND Type='ANIMAL'"
+    sql5 = "SELECT * from Has JOIN FarmItem On FarmItem.Name=Has.ItemName AND PropertyID=%s AND Type!='ANIMAL'"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql, (pid,))
+        result = cur.fetchone()
+
+    with conn.cursor() as cur:
+        cur.execute(sql2)
+        animals_approved = cur.fetchall()
+
+    with conn.cursor() as cur:
+        cur.execute(sql3)
+        crops_approved = cur.fetchall()
+
+    with conn.cursor() as cur:
+        cur.execute(sql4, (pid,))
+        animals = cur.fetchall()
+
+    with conn.cursor() as cur:
+        cur.execute(sql5, (pid,))
+        crops = cur.fetchall()
+
+    conn.close()
+    return render_template("manage_farm_name.html", result=result, animals=animals, crops=crops, crops_approved = crops_approved, animals_approved=animals_approved)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
