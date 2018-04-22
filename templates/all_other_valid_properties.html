@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="tableSelect.js"></script>
+	<title>All Other Valid Properties</title>
+
+</head>
+
+
+<body>
+
+	<div class="centerImg">
+		<!-- <p align="center" class="init_page"><strong>Welcome Owner</strong></p> -->
+
+
+		<!-- <div><p class="init_page"><span class="tab"><strong>Your Properties:</strong></span></p></div> -->
+		<table align="center" id="otherOTable">
+			<tr>
+		       <!--  <td style="width: 259px; vertical-align:top">
+		            main page
+		        </td> -->
+		        <td id="intro_prop">
+		        	<strong>All Other Valid Properties: </strong>
+		        </td>
+    		</tr>
+
+			<tr>
+				<th>Name</th>
+				<th>Address</th>
+				<th>City</th>
+				<th>Zip</th>
+				<th>Size</th>
+				<th>Type</th>
+				<th>Public</th>
+				<th>Comercial</th>
+				<th>ID</th>
+				<th>Visits</th>
+				<th>Avg. Rating</th>
+
+
+			</tr>
+
+      {% for p in plist %}
+      <tr onclick="tableSelect(this);" id="{{p['ID']}}">
+        <td>{{p['Name']}}</td>
+        <td>{{p['Street']}}</td>
+        <td>{{p['City']}}</td>
+        <td>{{p['Zip']}}</td>
+        <td>{{p['Size']}}</td>
+        <td>{{p['PropertyType']}}</td>
+        <td>{{p['IsPublic']}}</td>
+        <td>{{p['IsCommercial']}}</td>
+        <td>{{p['ID']}}</td>
+        <td>{{p['Visits']}}</td>
+        <td>{{p['Rating']}}</td>
+
+      </tr>
+    {% endfor %}
+
+
+		</table>
+
+
+					<pre></pre>
+					<pre></pre>
+					<pre></pre>
+
+
+					<select id="toSearch" name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
+							<option value="Search_by" disabled selected hidden>Search by...*</option>
+              <option id="0" value="Name">Name</option>
+              <option id="1" value="Address">Address</option>
+              <option id="2" value="City">City</option>
+              <option id="3" value="Zip">Zip</option>
+              <option id="4" value="Size">Size</option>
+              <option id="5" value="Type">Type</option>
+              <option id="6" value="Public">Public</option>
+              <option id="7" value="Commercial">Commercial</option>
+              <option id="8" value="ID">ID</option>
+              <option id="9" value="Visits">Visits</option>
+              <option id="10" value="Rating">Rating</option>
+
+					</select>
+
+				<pre></pre>
+				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
+
+				<pre></pre>
+				<button id="Search Properties" onclick="search('otherOTable');" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
+
+				<button id="view_property_details" onclick="viewDetails('otherOTable');" style="position: relative ; width: 110px;	left: 400px">View Property Details</button>
+
+				<button id="Back" onclick="return window.location.href ='http://localhost:5000/OWNER';" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button>
+
+
+	</div>
+
+
+
+
+</body>

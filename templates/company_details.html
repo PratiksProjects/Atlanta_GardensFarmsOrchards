@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="company_details.css">
 
 	<title>Company Details</title>
-	
+
 </head>
 
 
@@ -16,75 +16,81 @@
 
 	<div class="centerImg">
 
-		<form class="outsideFig">	
-			<p class=title><strong>Company Details</strong></p>
+		<form class="outsideFig">
+			<p class=title><strong>{{pdetails["Name"]}} Details</strong></p>
 
 			<div>
-				<p id="Name" class="details"><strong>Name: </strong></p>
+				<p id="Name" class="details"><strong>Name: {{pdetails["Name"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="Owner" class="details"><strong>Owner: </strong></p>
+				<p id="Owner" class="details"><strong>Owner: {{pdetails["Owner"]}}</strong></p>
 			</div>
 
 		    <div>
-				<p id="Owner_email" class="details"><strong>Owner Email: </strong></p>
+				<p id="Owner_email" class="details"><strong>Owner Email: {{pdetails["Email"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="Visits" class="details"><strong>Visits: </strong></p>
+				<p id="Visits" class="details"><strong>Visits: {{rating["Visits"]}}</strong></p>
 			</div>
 
 			<div>
-				<p id="Address" class="details"><strong>Address: </strong></p>
+				<p id="Address" class="details"><strong>Address: {{pdetails["Street"]}}</strong></p>
 			</div>
 
 			<div>
-				<p id="City" class="details"><strong>City: </strong></p>
+				<p id="City" class="details"><strong>City: {{pdetails["City"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="Zip" class="details"><strong>Zip: </strong></p>
+				<p id="Zip" class="details"><strong>Zip: {{pdetails["Zip"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="size_a" class="details"><strong>Size (acres): </strong></p>
+				<p id="size_a" class="details"><strong>Size (acres): {{pdetails["Size"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="avg_rat" class="details"><strong>Avg. Rating: </strong></p>
+				<p id="avg_rat" class="details"><strong>Avg. Rating: {{rating["Rating"]}}</strong></p>
 			</div>
 
 			<div>
-				<p id="type" class="details"><strong>Type: </strong></p>
+				<p id="type" class="details"><strong>Type: {{pdetails["PropertyType"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="is_public" class="details"><strong>Public: </strong></p>
+				<p id="is_public" class="details"><strong>Public: {{pdetails["IsPublic"]}}</strong></p>
 			</div>
 
 			<div>
-				<p id="is_commercial" class="details"><strong>Commercial: </strong></p>
+				<p id="is_commercial" class="details"><strong>Commercial:{{pdetails["IsCommercial"]}} </strong></p>
 			</div>
 
 			<div>
-				<p id="place_id" class="details"><strong>Id: </strong></p>
+				<p id="place_id" class="details"><strong>Id: {{pdetails["ID"]}} </strong></p>
 			</div>
 
 			<div>
 				<p id="Crops" class="details"><strong>Crops: </strong></p>
+        {% for crop in crops%}
+        <p>{{crop["Name"]}}</p>
+        {% endfor %}
 			</div>
 
 			<div>
 				<p id="Animals" class="details"><strong>Animals: </strong></p>
+        {% for animal in animals%}
+        <p>{{animals["Name"]}}</p>
+        {% endfor %}
 			</div>
 
-			
+
 			<button>Cancel</button>
 
-		</form>	
+		</form>
 	</div>
-	
+
 
 </body>
 </html>

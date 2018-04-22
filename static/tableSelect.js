@@ -108,6 +108,16 @@ function deleteAC(tableName){
     window.location.href ="http://localhost:5000/deleteAC";
   }
 }
+
+function viewDetails(tableName){
+  var name = $("#"+tableName+" tr.selected").attr('id');
+  if(name==null){
+    alert("Please select a row");
+  } else {
+    document.cookie = "PID=" + name;
+    window.location.href ="http://localhost:5000/farmDetails";
+  }
+}
 //above works
 // var visit = 0;
 // function sortTable() {

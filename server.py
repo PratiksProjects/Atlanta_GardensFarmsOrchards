@@ -226,7 +226,7 @@ def owner_list():
 
 @app.route('/visitorList', methods=['POST'])
 def visitor_list():
-    sql = "SELECT User.Username, User.Email, count(Visit.Username) as Visits from User JOIN Visit ON User.Username = Visit.Username AND User.UserType = 'VISITOR' Group By User.Username"
+    sql = "select * from (SELECT User.Username, User.Email, User.UserType, count(Visit.Username) as Visits from User left JOIN Visit ON User.Username = Visit.Username AND User.UserType = 'VISITOR' Group By User.Username) p where p.UserType = 'VISITOR';"
     conn = connectDB()
 
     with conn.cursor() as cur:
@@ -235,6 +235,18 @@ def visitor_list():
 
     conn.close()
     return render_template("all_visitors_in_system.html", vlist=vlist)
+
+@app.route('/viewOtherProperties', methods=['GET'])
+def view_other_properties():
+    sql = "SELECT Property.ID, Property.Name, Property.Street, Property.IsCommercial, Property.IsPublic, Property.City, Property.Zip, Property.PropertyType, Property.Size,  Avg(Visit.Rating) as Rating, Count(Visit.PropertyID) as Visits from Property JOIN Visit ON Property.ID = Visit.PropertyID AND Property.ApprovedBy != 'NULL' Group By Property.ID"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        plist = cur.fetchall()
+
+    conn.close()
+    return render_template("all_other_valid_properties.html", plist=plist)
 
 @app.route('/deleteVacc', methods=['GET'])
 def delete_vacc():
@@ -259,6 +271,33 @@ def delete_owner():
 
     conn.close()
     return redirect("/ADMIN")
+
+@app.route('/farmDetails', methods=['GET'])
+def farm_details():
+    pid = request.cookies.get('PID')
+    sql = "SELECT * FROM User JOIN Property ON Property.Owner=User.Username AND Property.ID = %s"
+    sql2 = "SELECT Count(Username) as Visits, Avg(Rating) as Rating from Visit WHERE PropertyID = %s"
+    sql3 = "SELECT Has.ItemName, FarmItem.`Type` FROM FarmItem Join Has On FarmItem.Name=Has.ItemName AND Has.PropertyID = %s AND FarmItem.`Type` = 'ANIMAL'"
+    sql4 = "SELECT Has.ItemName, FarmItem.`Type` FROM FarmItem Join Has On FarmItem.Name=Has.ItemName AND Has.PropertyID = %s AND FarmItem.`Type` != 'ANIMAL'"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql,(pid,))
+        pdetails = cur.fetchone()
+
+    with conn.cursor() as cur:
+        cur.execute(sql2,(pid,))
+        rating = cur.fetchone()
+
+    with conn.cursor() as cur:
+        cur.execute(sql3,(pid,))
+        animals = cur.fetchall()
+    print(animals)
+    with conn.cursor() as cur:
+        cur.execute(sql4,(pid,))
+        crops = cur.fetchall()
+    conn.close()
+    return render_template("company_details.html", pdetails=pdetails, rating=rating, animals=animals,crops=crops)
 
 @app.route('/deleteVlog', methods=['GET'])
 def delete_vlog():
