@@ -240,16 +240,24 @@ def add_p_view():
 @app.route('/addProperty', methods=['POST'])
 def add_property():
     msg = request.form
-    sql = "INSERT INTO Property (ID, Name, Size, Street, City, Zip, IsPublic, IsCommercial, PropertyType, Owner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO Property (ID, Name, Size, Street, City, Zip, IsPublic, IsCommercial, PropertyType, Owner, ApprovedBy) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s)"
+    sql2 = "INSERT INTO Has (PropertyID, ItemName) VALUES (%s, %s)"
+    sql3 = "INSERT INTO Has (PropertyID, ItemName) VALUES (%s, %s)"
     conn = connectDB()
+    id = random_with_N_digits(5)
     isPublic = yesno_to_bool(msg['public'])
     isCommercial = yesno_to_bool(msg['commercial'])
     global user_name
     with conn.cursor() as cur:
-        cur.execute(sql, (random_with_N_digits(5), msg['name'], int(msg['size']),msg['street'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], user_name))
+        cur.execute(sql, (id, msg['name'], int(msg['size']),msg['street'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], user_name,0))
     conn.commit()
+
     with conn.cursor() as cur:
-        cur.execute(sql, (random_with_N_digits(5), msg['name'], int(msg['size']),msg['street'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], user_name))
+        cur.execute(sql2, (id, msg['crop']))
+    conn.commit()
+
+    with conn.cursor() as cur:
+        cur.execute(sql3, (id,msg['animal']))
     conn.commit()
     conn.close()
     return redirect("/OWNER")

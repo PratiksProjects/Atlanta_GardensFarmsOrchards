@@ -60,7 +60,14 @@
   			</tr>
       {% endfor %}
 
+
+       
+
 		</table>
+
+         <pre></pre>
+        <pre></pre>
+        
         <button onclick="sortTableAscL('0')">Name Ascending</button>
         <button onclick="sortTableDesL('0')">Name Descending</button>
         <button onclick="sortTableAscL('2')">City Ascending</button>
@@ -100,9 +107,12 @@
 
 				<!-- <button id="log_out" style="position: relative ; width: 110px;	left: 600px; background: red">Log Out</button> -->
                 <form  method="POST">
+
+                <button style=" position: relative;  left: 500px; width:110px" onclick="return window.location.href ='http://localhost:5000/visit_history';">Visit History</button>
+
                 <button style="position: relative; left: 800px; background: red" type="submit" formaction="/logout">Log Out</button>
             </form>
-			<button style=" position: relative;  left: 800px; width:110px" onclick="return window.location.href ='http://localhost:5000/visit_history';">Visit History</button>
+			
 
 	</div>
 
