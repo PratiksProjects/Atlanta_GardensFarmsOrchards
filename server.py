@@ -78,7 +78,6 @@ def owner_profile():
         cur.execute(sql, (name,))
         results = cur.fetchall()
     conn.close()
-    plist=[]
     if(request.cookies.get('type') == 'OWNER'):
         return render_template("admin_property_management.html", plist=results)
     else:
@@ -181,6 +180,72 @@ def manage_property():
 
     conn.close()
     return render_template("manage_farm_name.html", result=result, animals=animals, crops=crops, crops_approved = crops_approved, animals_approved=animals_approved)
+
+@app.route('/confirmedProperties', methods=['POST'])
+def confirmed_properties():
+    sql = "SELECT * from Property WHERE ApprovedBy != 'NULL'"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        plist = cur.fetchall()
+
+    return render_template("confirmed_properties.html", plist=plist)
+
+@app.route('/unconfirmedProperties', methods=['POST'])
+def unconfirmed_properties():
+    sql = "SELECT * from Property WHERE ApprovedBy = 'NULL'"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        plist = cur.fetchall()
+
+    return render_template("unconfirmed_properties.html", plist=plist)
+
+@app.route('/ownerList', methods=['POST'])
+def owner_list():
+    sql = "SELECT * from User WHERE UserType ='OWNER'"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        olist = cur.fetchall()
+
+    return render_template("all_owners_in_system.html", olist=olist)
+
+@app.route('/visitorList', methods=['POST'])
+def visitor_list():
+    sql = "SELECT User.Username, User.Email, count(Visit.Username) as Visits from User JOIN Visit ON User.Username = Visit.Username AND User.UserType = 'VISITOR' Group By User.Username"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        vlist = cur.fetchall()
+
+    return render_template("all_visitors_in_system.html", vlist=vlist)
+
+@app.route('/approvedAC', methods=['POST'])
+def approved_ac():
+    sql = "SELECT * from FarmItem WHERE IsApproved = 1"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        aclist = cur.fetchall()
+
+    return render_template("approved_animals_crops.html", aclist=aclist)
+
+@app.route('/pendingAC', methods=['POST'])
+def pending_ac():
+    sql = "SELECT * from FarmItem WHERE IsApproved = 0"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        aclist = cur.fetchall()
+
+    return render_template("pending_approval_animal_crops.html", aclist=aclist)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

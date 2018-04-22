@@ -9,13 +9,13 @@ function findSelected(){
   alert($("#ownerTable tr.selected td:first").html());
 }
 
-function myFunction() {
+function search(tableID) {
   var col = $("#toSearch option:selected").attr('id');
-
+  console.log(col);
   var input, filter, table, tr, td, i;
   input = document.getElementById("Search Term");
   filter = input.value.toUpperCase();
-  table = document.getElementById("ownerTable");
+  table = document.getElementById(tableID);
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[col];
@@ -27,6 +27,16 @@ function myFunction() {
       }
     }
   }
+}
+
+function deleteVisitor() {
+    var v = $("#visitorTable tr.selected").attr('id');
+    if(v == null){
+      alert("Please select a row");
+    } else {
+      console.log(v);
+      //code for delet visitor
+    }
 }
 
 function manageProperty(){

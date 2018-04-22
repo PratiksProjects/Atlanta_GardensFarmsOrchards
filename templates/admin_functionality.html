@@ -6,8 +6,7 @@
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="admin_functionality.css">
-
-	<title>New Owner Registration</title>
+	<title>Admin Profile Page</title>
 
 </head>
 
@@ -16,15 +15,15 @@
 
 	<div class="centerImg">
 
-		<form method="post" class="outsideFig">
+		<form  method="POST" class="outsideFig">
 			<p class=title><strong>Welcome</strong></p>
 
-			<button>View Visitors List</button>
-			<button>View Owners List</button>
-			<button>View Confirmed Properties</button>
-			<button>View Unconfirmed Properties</button>
-			<button>View Approved Animals and Crops</button>
-			<button>View Pending Animals and Crops</button>
+			<button type="submit" formaction="/visitorList">View Visitors List</button>
+			<button type="submit" formaction="/ownerList">View Owners List</button>
+			<button type="submit" formaction="/confirmedProperties">View Confirmed Properties</button>
+			<button type="submit" formaction="/unconfirmedProperties">View Unconfirmed Properties</button>
+			<button type="submit" formaction="/approvedAC">View Approved Animals and Crops</button>
+			<button type="submit" formaction="/pendingAC">View Pending Animals and Crops</button>
 			<button type="submit" formaction="/logout">Log Out</button>
 
 		</form>

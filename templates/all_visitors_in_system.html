@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="tableSelect.js"></script>
 	<title>All Visitors in System</title>
-	
+
 </head>
 
 
@@ -19,7 +20,7 @@
 
 
 		<!-- <div><p class="init_page"><span class="tab"><strong>Your Properties:</strong></span></p></div> -->
-		<table align="center">
+		<table align="center" id="visitorTable">
 			<tr>
 		       <!--  <td style="width: 259px; vertical-align:top">
 		            main page
@@ -33,50 +34,42 @@
 				<th>Username</th>
 				<th>Email</th>
 				<th>Logged Visits</th>
-				
-				
+
+
 
 			</tr>
+      {% for v in vlist %}
+			<tr onclick="tableSelect(this);" id="{{v["Username"]}}">
+				<td>{{v["Username"]}}</td>
+				<td>{{v["Email"]}}</td>
+				<td>{{v["Visits"]}}</td>
 
-			<tr>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				
-			
 			</tr>
-
+      {% endfor %}
 
 		</table>
 
-	
+
 					<pre></pre>
 					<pre></pre>
 					<pre></pre>
 
 
-					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px">
+					<select id="toSearch" name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px">
 							<option value="Search_by" disabled selected hidden>Search by...</option>
-							<option value="Farm">Name</option>
-							<option value="Garden">Address</option>
-							<option value="Crop">City</option>
-							<option value="Crop">Zip</option>
-							<option value="Crop">Size</option>
-							<option value="Crop">Type</option>
-							<option value="Crop">Public</option>
-							<option value="Crop">Commercial</option>
-							<option value="Crop">ID</option>
-							<option value="Crop">City</option>
+							<option id="0">Username</option>
+							<option id="1">Email</option>
+							<option id="2">Logged Visits</option>
 
 					</select>
 
 				<pre></pre>
-				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>	
-				<button id="delete_visitor_account" style=" position: relative;  left: 400px; width:110px">Delete Visitor Account</button>
+				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
+				<button id="delete_visitor_account" onclick="deleteVisitor();" style=" position: relative;  left: 400px; width:110px">Delete Visitor Account</button>
 
 
 				<pre></pre>
-				<button id="Search Visitors" style=" position: relative;  left: 200px; width:110px">Search Visitors</button>
+				<button id="Search Visitors" onclick="search('visitorTable');"style=" position: relative;  left: 200px; width:110px">Search Visitors</button>
 
 				<button id="delete_log_history" style="position: relative ; width: 110px;	left: 400px">Delete Log History</button>
 
@@ -86,6 +79,6 @@
 	</div>
 
 
-	
+
 
 </body>
