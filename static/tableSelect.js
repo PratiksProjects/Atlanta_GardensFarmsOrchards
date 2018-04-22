@@ -44,9 +44,9 @@ function deleteVisitor() {
     }
 }
 
-function manageProperty(){
+function manageProperty(tableName){
   console.log("hello");
-  var id = $("#ownerTable tr.selected").attr('id');
+  var id = $("#"+tableName+" tr.selected").attr('id');
   if(id == null){
     alert("Please select a row");
   } else {
@@ -55,6 +55,10 @@ function manageProperty(){
   }
 }
 
+function addApprovedAC(){
+  var col = $("#newAC option:selected").html();
+  alert(col);
+}
 //above works
 // var visit = 0;
 // function sortTable() {

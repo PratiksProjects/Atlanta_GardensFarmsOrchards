@@ -183,7 +183,7 @@ def manage_property():
 
 @app.route('/confirmedProperties', methods=['POST'])
 def confirmed_properties():
-    sql = "SELECT * from Property WHERE ApprovedBy != 'NULL'"
+    sql = "SELECT Property.ID, Property.Name, Property.Street, Property.IsCommercial, Property.IsPublic, Property.City, Property.Zip, Property.PropertyType, Property.ApprovedBy, Property.Size,  Avg(Visit.Rating) as Rating from Property JOIN Visit ON Property.ID = Visit.PropertyID AND Property.ApprovedBy != 'NULL' Group By Property.ID"
     conn = connectDB()
 
     with conn.cursor() as cur:

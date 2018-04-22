@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="tableSelect.js"></script>
+	<title>Uncofirmed Properties</title>
 
-	<title>New Owner Registration</title>
-	
 </head>
 
 
@@ -19,7 +20,7 @@
 
 
 		<!-- <div><p class="init_page"><span class="tab"><strong>Your Properties:</strong></span></p></div> -->
-		<table align="center">
+		<table align="center" id="unconfirmedTable">
 			<tr>
 		       <!--  <td style="width: 259px; vertical-align:top">
 		            main page
@@ -40,55 +41,57 @@
 				<th>Comercial</th>
 				<th>ID</th>
 				<th>Owner</th>
-				
+
 
 			</tr>
 
-			<tr>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-			
+      {% for p in plist%}
+			<tr onclick="tableSelect(this);" id="{{p["ID"]}}">
+				<td>{{p["Name"]}}</td>
+				<td>{{p["Street"]}}</td>
+				<td>{{p["City"]}}</td>
+				<td>{{p["Zip"]}}</td>
+				<td>{{p["Size"]}}</td>
+				<td>{{p["PropertyType"]}}</td>
+				<td>{{p["IsPublic"]}}</td>
+				<td>{{p["IsCommercial"]}}</td>
+				<td>{{p["ID"]}}</td>
+				<td>{{p["Owner"]}}</td>
+
 			</tr>
+      {% endfor %}
 
 
 		</table>
 
-	
+
 					<pre></pre>
 					<pre></pre>
 					<pre></pre>
 
 
-					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
+					<select id="toSearch" name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
 							<option value="Search_by" disabled selected hidden>Search by...*</option>
-							<option value="Farm">Name</option>
-							<option value="Garden">Address</option>
-							<option value="Crop">City</option>
-							<option value="Crop">Zip</option>
-							<option value="Crop">Size</option>
-							<option value="Crop">Type</option>
-							<option value="Crop">Public</option>
-							<option value="Crop">Commercial</option>
-							<option value="Crop">ID</option>
-							<option value="Crop">City</option>
+              <option id="0" value="Name">Name</option>
+              <option id="1" value="Address">Address</option>
+              <option id="2" value="City">City</option>
+              <option id="3" value="Zip">Zip</option>
+              <option id="4" value="Size">Size</option>
+              <option id="5" value="Type">Type</option>
+              <option id="6" value="Public">Public</option>
+              <option id="7" value="Commercial">Commercial</option>
+              <option id="8" value="ID">ID</option>
+              <option id="9" value="Owner">Owner</option>
 
 					</select>
 
 				<pre></pre>
-				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>	
+				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
 
 				<pre></pre>
-				<button id="Search Properties" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
+				<button id="Search Properties" onclick="search('unconfirmedTable');" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
 
-				<button id="Manage_Selected_Property" style="position: relative ; width: 110px;	left: 400px">Manage Selected Property</button>
+				<button id="Manage_Selected_Property" onclick="manageProperty('unconfirmedTable');" style="position: relative ; width: 110px;	left: 400px">Manage Selected Property</button>
 
 				<button id="Back" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button>
 
@@ -96,6 +99,6 @@
 	</div>
 
 
-	
+
 
 </body>
