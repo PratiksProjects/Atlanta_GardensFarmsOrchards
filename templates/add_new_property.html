@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+
+	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
+
+	<title>Add New Property</title>
+	
+</head>
+
+
+<body>
+
+	<div class="centerImg">
+		<p align="center" class="init_page"><strong>Add New Property</strong></p>
+
+
+		<label id="property_name" style="  position: relative; left: 200px"><strong>Property Name*: </strong></label>
+		<input type="text" name="property_name_input" style="position: relative; left: 210px; height: 30px; width: 500px" required>
+
+		<pre></pre>
+
+		
+
+		<label id="street_address" style="  position: relative; left: 200px"><strong>Street Address*: </strong></label>
+		<input type="text" name="street_address_input" style="position: relative; left: 210px; height: 30px; width: 500px" required>
+
+		<pre></pre>
+	
+		<label id="city" style="  position: relative; left: 275px"><strong>City*: </strong></label>
+		<input type="text" name="city_input" style="position: relative; left: 285px; height: 30px; width: 200px" required>
+
+		<label id="zip" style="  position: relative; left: 400px"><strong>Zip*: </strong></label>
+		<input type="text" name="zip_input" style="position: relative; left: 410px; height: 30px; width: 200px" required>
+
+		<label id="acres" style="  position: relative; left: 600px"><strong>Acres*: </strong></label>
+		<input type="text" name="acres_input" style="position: relative; left: 610px; height: 30px; width: 200px" required>
+
+		<pre></pre>
+	
+		<label id="property_type" style="  position: relative; left: 200px"><strong>Property Type*: </strong></label>
+			<select name="property_type_selector" style=" position: relative;   width: 160px;height: 50px; left: 210px" required>
+								<option value="Search_by" disabled selected hidden>Select Property...*</option>
+								<option value="Farm">Farm</option>
+								<option value="Garden">Garden</option>
+								<option value="Orchard">Orchard</option>
+								
+			</select>
+
+		<label id="animal_type" style="  position: relative; left: 400px"><strong>Animal*: </strong></label>
+			<select name="property_type_selector" style=" position: relative;   width: 160px;height: 50px; left: 410px" required>
+								<option value="select_animal" disabled selected hidden>Select Animal...*</option>
+								
+								
+			</select>	
+
+		<label id="crop_type" style="  position: relative; left: 600px"><strong>Crop*: </strong></label>
+			<select name="crop_type_selector" style=" position: relative;   width: 160px;height: 50px; left: 610px" required>
+								<option value="select_crop" disabled selected hidden>Select Crop...*</option>
+								
+								
+			</select>
+
+
+		<pre></pre>
+		
+		<label id="is_public" style="  position: relative; left: 245px"><strong>Public?*: </strong></label>
+			<select name="is_public_selector" style=" position: relative;   width: 160px;height: 50px; left: 255px" required>
+								<option value="select_is_public" disabled selected hidden>Select...*</option>
+								<option value="public_yes">Yes</option>
+								<option value="public_no">No</option>
+								
+			</select>
+
+
+		<pre></pre>			
+
+		<label id="is_commercial" style="  position: relative; left: 200px"><strong>Commercial?*: </strong></label>
+			<select name="is_commercial_selector" style=" position: relative;   width: 160px;height: 50px; left: 210px" required>
+								<option value="select_is_public" disabled selected hidden>Select...*</option>
+								<option value="commercial_yes">Yes</option>
+								<option value="commercial_no">No</option>
+								
+			</select>
+
+
+		<pre></pre>	
+
+		<button id="add_property_button" style="position: relative; width: 110px; left: 500px">Add Property</button>
+		<button id="cancel_button" style="position: relative ; width: 110px;	left: 700px; background: red">Cancel</button>
+
+	</div>
+
+
+	
+
+</body>

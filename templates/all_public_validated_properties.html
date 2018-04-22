@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
+  <script src="tableSelect.js"></script>
+	<title>New Owner Registration</title>
 
-	<title>All public, validated properties</title>
-	
 </head>
 
 
 <body>
 
-	<div class="centerImg">
+	<!-- <div class="centerImg"> -->
 		<p align="center" class="init_page"><strong>Welcome Visitor</strong></p>
 
 
 		<!-- <div><p class="init_page"><span class="tab"><strong>Your Properties:</strong></span></p></div> -->
-		<table align="center">
+		<table align="center" id="ownerTable">
 			<tr>
 		       <!--  <td style="width: 259px; vertical-align:top">
 		            main page
 		        </td> -->
 		        <td id="intro_prop">
-		        	<strong>All public, validated properties: </strong>
+		        	<strong>Your Properties: </strong>
 		        </td>
     		</tr>
 
@@ -40,68 +40,229 @@
 				<th>Commercial</th>
 				<th>ID</th>
 				<th>Visits</th>
-				<th>Avg. Rating</th>
-				
-				
+				<th>Avg. Ratings</th>
 
 			</tr>
+        {% for p in plist %}
+  			<tr onclick="tableSelect(this);" id="{{p['ID']}}">
+  				<td>{{p['Name']}}</td>
+  				<td>{{p['Street']}}</td>
+  				<td>{{p['City']}}</td>
+  				<td>{{p['Zip']}}</td>
+  				<td>{{p['Size']}}</td>
+  				<td>{{p['PropertyType']}}</td>
+  				<td>{{p['IsPublic']}}</td>
+  				<td>{{p['IsCommercial']}}</td>
+  				<td>{{p['ID']}}</td>
+  				<td>{{p['Visits']}}</td>
+  				<td>{{p['Rating']}}</td>
 
-			<tr>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				
-			
-			</tr>
-
+  			</tr>
+      {% endfor %}
 
 		</table>
+        <button onclick="sortTableAsc('10')">Visit Ascending</button>
+        <button onclick="sortTableDes('10')">Visit Descending</button>
+        <button onclick="sortTableAscL('0')">Name Ascending</button>
+        <button onclick="sortTableDesL('0')">Name Descending</button>
+        <button onclick="sortTableAscL('2')">City Ascending</button>
+        <button onclick="sortTableDesL('2')">City Descending</button>
+        <button onclick="sortTableAscL('5')">Type Ascending</button>
+        <button onclick="sortTableDesL('5')">Type Descending</button>
 
-	
+        <pre></pre>
+
+        <button onclick="sortTableAsc('11')">Avg. Rating Ascending</button>
+
+        <pre></pre>
+
+        <button onclick="sortTableDes('11')">Avg. Rating Descending</button>
+
+
 					<pre></pre>
 					<pre></pre>
 					<pre></pre>
-
-
-					<select name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px">
-							<option value="Search_by" disabled selected hidden>Search by...</option>
-							<option value="Farm">Name</option>
-							<option value="Garden">Address</option>
-							<option value="Crop">City</option>
-							<option value="Crop">Zip</option>
-							<option value="Crop">Size</option>
-							<option value="Crop">Type</option>
-							<option value="Crop">Public</option>
-							<option value="Crop">Commercial</option>
-							<option value="Crop">ID</option>
-							<option value="Crop">City</option>
-
-					</select>
 
 				<pre></pre>
-				<input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>	
-				<button id="view_property" style=" position: relative;  left: 400px; width:110px">View Property</button>
+                <select id="toSearch" name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
+                    <option value="Search_by" disabled selected hidden>Search by...*</option>
+                    <option id="0" value="Name">Name</option>
+                    <option id="2" value="City">City</option>
+                    <option id="5" value="Type">Type</option>
+                    <option id="9" value="Visits">Visits</option>
+                    <option id="10" value="Rating">Rating</option>
+                </select>
 
-
-				<pre></pre>
-				<button id="search_properties" style=" position: relative;  left: 200px; width:110px">Search Properties</button>
+              <pre></pre>
+              <input type="Search Term" name="Search Term" id="Search Term" placeholder="Search Term" style=" position: relative; left:200px; width:110px"></input>
+              <pre></pre>
+              <button style=" position: relative;  left: 200px; width:110px" onclick="search('ownerTable'); ">Search Properties</button>
 
 				<button id="view_visit_history" style="position: relative ; width: 110px;	left: 400px">View Visit History</button>
 
-				<button id="log_out" style="position: relative ; width: 110px;	left: 600px; background: red">Log Out</button>
-
+				<!-- <button id="log_out" style="position: relative ; width: 110px;	left: 600px; background: red">Log Out</button> -->
+                <form  method="POST">
+                <button style="position: relative; left: 800px; background: red" type="submit" formaction="/logout">Log Out</button>
+            </form>
 
 	</div>
 
+    <!--Ascending number function  -->
+    <script>
+    function sortTableAsc(C) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("ownerTable");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 2; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[C];
+      y = rows[i + 1].getElementsByTagName("TD")[C];
+      //check if the two rows should switch place:
+      if (x.innerHTML > y.innerHTML) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+    }
+    }
 
-	
+    </script>
+
+
+
+    <!--Sort Table with Letters Ascending -->
+
+    <script>
+    function sortTableAscL(C) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("ownerTable");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 2; i < (rows.length - 1); i++) {
+    //start by saying there should be no switching:
+    shouldSwitch = false;
+    /*Get the two elements you want to compare,
+    one from current row and one from the next:*/
+    x = rows[i].getElementsByTagName("TD")[C];
+    y = rows[i + 1].getElementsByTagName("TD")[C];
+    //check if the two rows should switch place:
+    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+    //if so, mark as a switch and break the loop:
+    shouldSwitch= true;
+    break;
+    }
+    }
+    if (shouldSwitch) {
+    /*If a switch has been marked, make the switch
+    and mark that a switch has been done:*/
+    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+    switching = true;
+    }
+    }
+    }
+    </script>
+
+    <!--Sort Table with Letters Descending -->
+
+    <script>
+    function sortTableDesL(C) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("ownerTable");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 2; i < (rows.length - 1); i++) {
+    //start by saying there should be no switching:
+    shouldSwitch = false;
+    /*Get the two elements you want to compare,
+    one from current row and one from the next:*/
+    x = rows[i].getElementsByTagName("TD")[C];
+    y = rows[i + 1].getElementsByTagName("TD")[C];
+    //check if the two rows should switch place:
+    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+    //if so, mark as a switch and break the loop:
+    shouldSwitch= true;
+    break;
+    }
+    }
+    if (shouldSwitch) {
+    /*If a switch has been marked, make the switch
+    and mark that a switch has been done:*/
+    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+    switching = true;
+    }
+    }
+    }
+    </script>
+    <!--Sort numbers Descending function  -->
+    <script>
+    function sortTableDes(C) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("ownerTable");
+    switching = true;
+    /*Make a loop that will continue until
+    no switching has been done:*/
+    while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 2; i < (rows.length - 1); i++) {
+    //start by saying there should be no switching:
+    shouldSwitch = false;
+    /*Get the two elements you want to compare,
+    one from current row and one from the next:*/
+    x = rows[i].getElementsByTagName("TD")[C];
+    y = rows[i + 1].getElementsByTagName("TD")[C];
+    //check if the two rows should switch place:
+    if (x.innerHTML < y.innerHTML) {
+    //if so, mark as a switch and break the loop:
+    shouldSwitch= true;
+    break;
+    }
+    }
+    if (shouldSwitch) {
+    /*If a switch has been marked, make the switch
+    and mark that a switch has been done:*/
+    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+    switching = true;
+    }
+    }
+    }
+    </script>
+
 
 </body>
+</html>

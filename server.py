@@ -63,11 +63,17 @@ def login():
 
 @app.route('/VISITOR', methods=['GET'])
 def visitor_profile():
-    print(request.cookies)
-    if(request.cookies.get('type') == 'VISITOR'):
-        return render_template("visitor.html")
-    else:
-        return redirect('/')
+   name = request.cookies.get('username')
+   conn = connectDB()
+   sql = "SELECT Property.ID, Property.Name, Property.Street, Property.IsCommercial, Property.IsPublic, Property.City, Property.Zip, Property.PropertyType, Property.ApprovedBy, Property.Size,  Avg(Visit.Rating) as Rating, count(Visit.PropertyID) as Visits from Property JOIN Visit ON Property.ID = Visit.PropertyID AND Property.ApprovedBy != 'NULL' Group By Property.ID"
+   with conn.cursor() as cur:
+       cur.execute(sql)
+       results = cur.fetchall()
+   conn.close()
+   if(request.cookies.get('type') == 'VISITOR'):
+       return render_template("all_public_validated_properties.html", plist=results)
+   else:
+       return redirect('/')
 
 @app.route('/OWNER', methods=['GET'])
 def owner_profile():
@@ -200,6 +206,10 @@ def confirmed_properties():
     conn.close()
     return render_template("confirmed_properties.html", plist=plist)
 
+@app.route('/addPropertyView', methods=['GET'])
+    return render_template("add_new_property.html", plist=plist)
+
+
 @app.route('/unconfirmedProperties', methods=['POST'])
 def unconfirmed_properties():
     sql = "SELECT * from Property WHERE ApprovedBy = 'NULL'"
@@ -292,10 +302,11 @@ def farm_details():
     with conn.cursor() as cur:
         cur.execute(sql3,(pid,))
         animals = cur.fetchall()
-    print(animals)
+
     with conn.cursor() as cur:
         cur.execute(sql4,(pid,))
         crops = cur.fetchall()
+    print(crops)
     conn.close()
     return render_template("company_details.html", pdetails=pdetails, rating=rating, animals=animals,crops=crops)
 
