@@ -11,7 +11,7 @@ import hashlib
 app = Flask(__name__, static_url_path="")
 
 profile_pages = {"ADMIN":"admin.html","VISITOR":"visitor.html","OWNER":"owner.html"}
-
+user_name = ""
 def random_with_N_digits(n):
     range_start = 10**(n-1)
     range_end = (10**n)-1
@@ -57,6 +57,8 @@ def login():
             resp = make_response(redirect("/"+ user_type))
             resp.set_cookie('type', user_type)
             resp.set_cookie('username', msg['username'])
+            global user_name
+            user_name = msg['username']
             return resp
     else:
         return redirect("/")
@@ -127,7 +129,7 @@ def register_owner():
             cur.execute(sql, (msg['username'],msg['email'],h.hexdigest(),'Owner'))
 
         conn.commit()
-        isPublic = yesno_to_bool(msg['isPublic'])
+        isPublic = yesno_to_bool(msg['public'])
         isCommercial = yesno_to_bool(msg['isCommercial'])
         with conn.cursor() as cur:
             sql = "INSERT INTO Property (ID, Name, Size, Street, City, Zip, IsPublic, IsCommercial, PropertyType, Owner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -206,9 +208,51 @@ def confirmed_properties():
     conn.close()
     return render_template("confirmed_properties.html", plist=plist)
 
-@app.route('/addPropertyView', methods=['GET'])
-    return render_template("add_new_property.html", plist=plist)
+@app.route('/visit_history', methods=['GET'])
+def visit_history():
+   sql = "SELECT Name, VisitDate, Rating, Property.ID  from Visit Join Property on Visit.PropertyID = Property.ID WHERE Username = %s"
+   conn = connectDB()
 
+   with conn.cursor() as cur:
+       cur.execute(sql,(user_name))
+       plist = cur.fetchall()
+   print(plist)
+   conn.close()
+   return render_template("visit_history.html", plist=plist)
+
+@app.route('/addPropertyView', methods=['GET'])
+def add_p_view():
+    sql = "SELECT * from FarmItem WHERE IsApproved = 1 AND Type = 'ANIMAL'"
+    sql2 = "SELECT * from FarmItem WHERE IsApproved = 1 AND Type != 'ANIMAL'"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql)
+        animals = cur.fetchall()
+
+    with conn.cursor() as cur:
+        cur.execute(sql2)
+        crops = cur.fetchall()
+
+    conn.close()
+    return render_template("add_new_property.html", animals=animals, crops=crops)
+
+@app.route('/addProperty', methods=['POST'])
+def add_property():
+    msg = request.form
+    sql = "INSERT INTO Property (ID, Name, Size, Street, City, Zip, IsPublic, IsCommercial, PropertyType, Owner) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    conn = connectDB()
+    isPublic = yesno_to_bool(msg['public'])
+    isCommercial = yesno_to_bool(msg['commercial'])
+    global user_name
+    with conn.cursor() as cur:
+        cur.execute(sql, (random_with_N_digits(5), msg['name'], int(msg['size']),msg['street'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], user_name))
+    conn.commit()
+    with conn.cursor() as cur:
+        cur.execute(sql, (random_with_N_digits(5), msg['name'], int(msg['size']),msg['street'],msg['city'], msg['zip'], isPublic, isCommercial, msg['propertyType'], user_name))
+    conn.commit()
+    conn.close()
+    return redirect("/OWNER")
 
 @app.route('/unconfirmedProperties', methods=['POST'])
 def unconfirmed_properties():
@@ -306,7 +350,6 @@ def farm_details():
     with conn.cursor() as cur:
         cur.execute(sql4,(pid,))
         crops = cur.fetchall()
-    print(crops)
     conn.close()
     return render_template("company_details.html", pdetails=pdetails, rating=rating, animals=animals,crops=crops)
 
@@ -343,6 +386,7 @@ def add_ac():
 
     with conn.cursor() as cur:
         cur.execute(sql, (name, 1 ,type))
+    conn.commit()
     conn.close()
     return redirect("/ADMIN")
 

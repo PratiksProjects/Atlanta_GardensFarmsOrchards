@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="tableSelect.js"></script>
 	<title>Visit History</title>
-	
+
 </head>
 
 
@@ -19,7 +20,7 @@
 
 
 		<!-- <div><p class="init_page"><span class="tab"><strong>Your Properties:</strong></span></p></div> -->
-		<table align="center">
+		<table align="center" id="visitHistory">
 			<tr>
 		       <!--  <td style="width: 259px; vertical-align:top">
 		            main page
@@ -33,25 +34,25 @@
 				<th>Name</th>
 				<th>Date Logged</th>
 				<th style="color: red">Rating</th>
-				
-				
-				
+
+
+
 
 			</tr>
 
-			<tr>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				<td>fsdf</td>
-				
-				
-			
-			</tr>
+            {% for p in plist %}
+      			<tr onclick="tableSelect(this);" id="{{p['ID']}}">
+      				<td>{{p['Name']}}</td>
+      				<td>{{p['VisitDate']}}</td>
+      				<td>{{p['Rating']}}</td>
+
+                </tr>
+          {% endfor %}
 
 
 		</table>
 
-	
+
 					<pre></pre>
 					<pre></pre>
 					<pre></pre>
@@ -61,14 +62,14 @@
 
 					<!-- <pre></pre> -->
 
-					<button id="view_property_details" style=" position: relative;  left: 600px; width:110px">View Property Details</button>
+					<button id="view_property_details" onclick="viewDetails('visitHistory');" style=" position: relative;  left: 600px; width:110px">View Property Details</button>
 
 					<pre></pre>
 
-					<button id="Back" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button>
+					<button id="Back" onclick="return window.location.href ='http://localhost:5000/VISITOR';" style="position: relative ; width: 110px;	left: 600px; background: red">Back</button>
 	</div>
 
 
-	
+
 
 </body>

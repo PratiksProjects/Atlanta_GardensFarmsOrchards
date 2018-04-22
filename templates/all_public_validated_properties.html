@@ -61,14 +61,14 @@
       {% endfor %}
 
 		</table>
-        <button onclick="sortTableAsc('10')">Visit Ascending</button>
-        <button onclick="sortTableDes('10')">Visit Descending</button>
         <button onclick="sortTableAscL('0')">Name Ascending</button>
         <button onclick="sortTableDesL('0')">Name Descending</button>
         <button onclick="sortTableAscL('2')">City Ascending</button>
         <button onclick="sortTableDesL('2')">City Descending</button>
         <button onclick="sortTableAscL('5')">Type Ascending</button>
         <button onclick="sortTableDesL('5')">Type Descending</button>
+		<button onclick="sortTableAsc('10')">Visit Ascending</button>
+        <button onclick="sortTableDes('10')">Visit Descending</button>
 
         <pre></pre>
 
@@ -98,12 +98,11 @@
               <pre></pre>
               <button style=" position: relative;  left: 200px; width:110px" onclick="search('ownerTable'); ">Search Properties</button>
 
-				<button id="view_visit_history" style="position: relative ; width: 110px;	left: 400px">View Visit History</button>
-
 				<!-- <button id="log_out" style="position: relative ; width: 110px;	left: 600px; background: red">Log Out</button> -->
                 <form  method="POST">
                 <button style="position: relative; left: 800px; background: red" type="submit" formaction="/logout">Log Out</button>
             </form>
+			<button style=" position: relative;  left: 800px; width:110px" onclick="return window.location.href ='http://localhost:5000/visit_history';">Visit History</button>
 
 	</div>
 
