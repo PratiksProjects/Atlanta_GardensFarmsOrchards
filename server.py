@@ -265,6 +265,18 @@ def approved_ac():
     conn.close()
     return render_template("approved_animals_crops.html", aclist=aclist)
 
+@app.route('/addAC', methods=['GET'])
+def add_ac():
+    name = request.cookies.get('ACName')
+    type = request.cookies.get('Type')
+    conn = connectDB()
+    sql = "INSERT INTO FarmItem (Name, IsApproved, Type) VALUES (%s, %s, %s)"
+
+    with conn.cursor() as cur:
+        cur.execute(sql, (name, 1 ,type))
+    conn.close()
+    return redirect("/ADMIN")
+
 @app.route('/pendingAC', methods=['POST'])
 def pending_ac():
     sql = "SELECT * from FarmItem WHERE IsApproved = 0"
@@ -276,6 +288,32 @@ def pending_ac():
 
     conn.close()
     return render_template("pending_approval_animal_crops.html", aclist=aclist)
+
+@app.route('/approveAC', methods=['GET'])
+def approve_ac():
+    name = request.cookies.get('ACName')
+    sql = "UPDATE FarmItem SET IsApproved=1 WHERE Name = %s"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql,(name,))
+        aclist = cur.fetchall()
+
+    conn.close()
+    return redirect("/ADMIN")
+
+@app.route('/deleteAC', methods=['GET'])
+def delete_ac():
+    name = request.cookies.get('ACName')
+    sql = "DELETE FROM FarmItem WHERE Name = %s"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql,(name,))
+        aclist = cur.fetchall()
+
+    conn.close()
+    return redirect("/ADMIN")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

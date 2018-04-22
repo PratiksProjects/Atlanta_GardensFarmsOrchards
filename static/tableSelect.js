@@ -56,8 +56,34 @@ function manageProperty(tableName){
 }
 
 function addApprovedAC(){
-  var col = $("#newAC option:selected").html();
-  alert(col);
+  var type = $("#newAC option:selected").attr('id');
+  var name = $("#enter_name").val();
+  document.cookie = "ACName=" + name;
+  document.cookie = "Type=" + type;
+  alert("Your entry has been added to the database");
+  window.location.href ="http://localhost:5000/addAC";
+}
+
+function approveAC(){
+  var name = $("#pendingAC tr.selected").attr('id');
+  if(name==null){
+    alert("Please select a row");
+  } else {
+    document.cookie = "ACName=" + name;
+    alert("The selection has been approved");
+    window.location.href ="http://localhost:5000/approveAC";
+  }
+}
+
+function deleteAC(tableName){
+  var name = $("#"+tableName+" tr.selected").attr('id');
+  if(name==null){
+    alert("Please select a row");
+  } else {
+    document.cookie = "ACName=" + name;
+    alert("The selection has been deleted");
+    window.location.href ="http://localhost:5000/deleteAC";
+  }
 }
 //above works
 // var visit = 0;

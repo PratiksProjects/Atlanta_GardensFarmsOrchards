@@ -63,20 +63,20 @@
 
 					<select id="newAC" name="type_search" style=" position: relative;   width: 100px;height: 70px; left: 600px">
 							<option value="Search_by" disabled selected hidden>Type... </option>
-              <option>Animal</option>
-              <option>Flower</option>
-              <option>Fruit</option>
-              <option>Nut</option>
-              <option>Vegetable</option>
+              <option id="Animal">Animal</option>
+              <option id="Flower">Flower</option>
+              <option id="Fruit">Fruit</option>
+              <option id="Nut">Nut</option>
+              <option id="Vegetable">Vegetable</option>
 					</select>
 
 
 				<pre></pre>
-				<input type="text" name="Search Term" id="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
+				<input type="text" name="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
 				<!-- <button id="delete_owner_account" style=" position: relative;  left: 600px; width:110px">Delete Owner Account</button> -->
 				<input type="text" name="Enter Name" id="enter_name" placeholder="Enter Name" style="left:590px; width:110px"></input>
 
-				<button id="delete_selection" style=" position: relative;  left: 800px; width:110px">Delete Selection</button>
+				<button id="delete_selection" onclick="deleteAC('approvedAC');" style=" position: relative;  left: 800px; width:110px">Delete Selection</button>
 
 				<pre></pre>
 				<button id="search_owners" onclick="search('approvedAC');" style=" position: relative;  left: 200px; width:110px">Search Owners</button>
