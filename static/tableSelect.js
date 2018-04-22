@@ -76,6 +76,17 @@ function addApprovedAC(){
   window.location.href ="http://localhost:5000/addAC";
 }
 
+function deleteOwner(){
+  var name = $("#ownerTable tr.selected").attr('id');
+  if(name==null){
+    alert("Please select a row");
+  } else {
+    document.cookie = "OName=" + name;
+    alert("The owner account has been deleted");
+    window.location.href ="http://localhost:5000/deleteOwner";
+  }
+}
+
 function approveAC(){
   var name = $("#pendingAC tr.selected").attr('id');
   if(name==null){

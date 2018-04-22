@@ -88,7 +88,10 @@ def admin_profile():
     if(request.cookies.get('type') == 'ADMIN'):
         return render_template("admin_functionality.html")
     else:
-        return redirect('/')
+        if(request.cookies.get('type') == 'OWNER'):
+            return redirect('/OWNER')
+        else:
+            return redirect('/VISITOR')
 
 @app.route('/ownerRegisterPage', methods=['POST'])
 def owner_register_page():
@@ -236,6 +239,18 @@ def visitor_list():
 @app.route('/deleteVacc', methods=['GET'])
 def delete_vacc():
     name = request.cookies.get('VName')
+    sql = "DELETE FROM User WHERE Username = %s"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql,(name,))
+
+    conn.close()
+    return redirect("/ADMIN")
+
+@app.route('/deleteOwner', methods=['GET'])
+def delete_owner():
+    name = request.cookies.get('OName')
     sql = "DELETE FROM User WHERE Username = %s"
     conn = connectDB()
 
