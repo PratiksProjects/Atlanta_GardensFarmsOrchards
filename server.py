@@ -110,10 +110,12 @@ def register_owner():
     conn = connectDB()
     h = hashlib.md5()
     msg = request.form
+    pw = msg['password']
+    h.update(pw)
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
-            cur.execute(sql, (msg['username'],msg['email'],h.update(msg['password']).hexdigest(),'Owner'))
+            cur.execute(sql, (msg['username'],msg['email'],h.hexdigest(),'Owner'))
 
         conn.commit()
         isPublic = yesno_to_bool(msg['isPublic'])
@@ -134,7 +136,9 @@ def register_visitor():
     h = hashlib.md5()
     conn = connectDB()
     msg = request.form
-    password = str(h.update(msg['password']).hexdigest())
+    pw = msg['password']
+    h.update(pw)
+    password = str(h.hexdigest())
     try:
         with conn.cursor() as cur:
             sql = "INSERT INTO User (Username, Email, Password, UserType) VALUES (%s, %s, %s, %s)"
