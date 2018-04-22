@@ -11,19 +11,24 @@ function findSelected(){
 
 function search(tableID) {
   var col = $("#toSearch option:selected").attr('id');
-  console.log(col);
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("Search Term");
-  filter = input.value.toUpperCase();
-  table = document.getElementById(tableID);
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[col];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+  if(col == null){
+    alert("Please select a search index.");
+  }
+  else {
+    console.log(col);
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("Search Term");
+    filter = input.value.toUpperCase();
+    table = document.getElementById(tableID);
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[col];
+      if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
       }
     }
   }

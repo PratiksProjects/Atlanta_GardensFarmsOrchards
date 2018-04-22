@@ -190,6 +190,7 @@ def confirmed_properties():
         cur.execute(sql)
         plist = cur.fetchall()
 
+    conn.close()
     return render_template("confirmed_properties.html", plist=plist)
 
 @app.route('/unconfirmedProperties', methods=['POST'])
@@ -201,17 +202,19 @@ def unconfirmed_properties():
         cur.execute(sql)
         plist = cur.fetchall()
 
+    conn.close()
     return render_template("unconfirmed_properties.html", plist=plist)
 
 @app.route('/ownerList', methods=['POST'])
 def owner_list():
-    sql = "SELECT * from User WHERE UserType ='OWNER'"
+    sql = "SELECT User.Username, User.Email, count(Property.Owner) as Properties from User JOIN Property ON User.Username = Property.Owner Group By User.Username"
     conn = connectDB()
 
     with conn.cursor() as cur:
         cur.execute(sql)
         olist = cur.fetchall()
 
+    conn.close()
     return render_template("all_owners_in_system.html", olist=olist)
 
 @app.route('/visitorList', methods=['POST'])
@@ -223,7 +226,32 @@ def visitor_list():
         cur.execute(sql)
         vlist = cur.fetchall()
 
+    conn.close()
     return render_template("all_visitors_in_system.html", vlist=vlist)
+
+@app.route('/deleteVacc', methods=['POST'])
+def delete_vacc():
+    name = request.form["username"]
+    sql = "DELETE FROM User WHERE Username = %s"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql,(name,))
+
+    conn.close()
+    return redirect("/ADMIN")
+
+@app.route('/deleteVLog', methods=['POST'])
+def delete_vlog():
+    name = request.form["username"]
+    sql = "DELETE FROM Visit WHERE Username = %s"
+    conn = connectDB()
+
+    with conn.cursor() as cur:
+        cur.execute(sql,(name,))
+
+    conn.close()
+    return redirect("/ADMIN")
 
 @app.route('/approvedAC', methods=['POST'])
 def approved_ac():
@@ -234,6 +262,7 @@ def approved_ac():
         cur.execute(sql)
         aclist = cur.fetchall()
 
+    conn.close()
     return render_template("approved_animals_crops.html", aclist=aclist)
 
 @app.route('/pendingAC', methods=['POST'])
@@ -245,6 +274,7 @@ def pending_ac():
         cur.execute(sql)
         aclist = cur.fetchall()
 
+    conn.close()
     return render_template("pending_approval_animal_crops.html", aclist=aclist)
 
 if __name__ == '__main__':
