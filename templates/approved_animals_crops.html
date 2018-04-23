@@ -4,7 +4,6 @@
 <head>
 
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="tableSelect.js"></script>
@@ -39,9 +38,9 @@
 
 			</tr>
       {% for ac in aclist%}
-			<tr onclick="tableSelect(this);" id="{{ac["Name"]}}">
-				<td>{{ac["Name"]}}</td>
-				<td>{{ac["Type"]}}</td>
+			<tr onclick="tableSelect(this);" id="{{ac['Name']}}">
+				<td>{{ac['Name']}}</td>
+				<td>{{ac['Type']}}</td>
 
 			</tr>
       {% endfor %}
@@ -54,12 +53,13 @@
 					<pre></pre>
 
 
-					<select id="toSearch" name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px">
-							<option value="Search_by" disabled selected hidden>Search by...</option>
-              <option id="0" value="Name">Name</option>
-              <option id="1" value="Type">Type</option>
-					</select>
-
+					<select id="toSearch" name="Search_by" style=" position: relative;   width: 100px;height: 70px; left: 200px" required>
+	                    <option value="Search_by" disabled selected hidden>Search by...*</option>
+	                    <option id="0" value="Name">Name</option>
+	                    <option id="1" value="Type">Type</option>
+	                </select>
+				<input type="Search Term" name="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
+				<button  onclick="search('approvedAC');" style=" position: relative;  left: 200px; width:110px">Search Animal/Crop</button>
 
 					<select id="newAC" name="type_search" style=" position: relative;   width: 100px;height: 70px; left: 600px">
 							<option value="Search_by" disabled selected hidden>Type... </option>
@@ -72,14 +72,14 @@
 
 
 				<pre></pre>
-				<input type="text" name="Search Term" placeholder="Search Term" style="left:200px; width:110px"></input>
+
 				<!-- <button id="delete_owner_account" style=" position: relative;  left: 600px; width:110px">Delete Owner Account</button> -->
 				<input type="text" name="Enter Name" id="enter_name" placeholder="Enter Name" style="left:590px; width:110px"></input>
 
 				<button id="delete_selection" onclick="deleteAC('approvedAC');" style=" position: relative;  left: 800px; width:110px">Delete Selection</button>
 
 				<pre></pre>
-				<button id="search_owners" onclick="search('approvedAC');" style=" position: relative;  left: 200px; width:110px">Search Owners</button>
+
 
 				<!-- <button id="delete_log_history" style="position: relative ; width: 110px;	left: 400px">Delete Log History</button> -->
 
@@ -94,3 +94,4 @@
 
 
 </body>
+</html>

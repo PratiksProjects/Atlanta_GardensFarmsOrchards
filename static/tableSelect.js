@@ -34,6 +34,35 @@ function search(tableID) {
   }
 }
 
+function addAnimal(){
+  var name = $('#approved_animal_selector option:selected').val();
+  $('#animals_table tr:last').after("<tr onclick='tableSelect(this);' id='"+name+"'><td>" + name + '</td></tr>');
+}
+function addCrop(){
+  var name = $('#approved_crop_selector option:selected').val();
+  $('#crops_table tr:last').after("<tr onclick='tableSelect(this);' id='"+name+"'><td>" + name + '</td></tr>');
+}
+
+function deleteAnimal(){
+  $("#animals_table tr.selected").remove();
+}
+function deleteCrop(){
+  $("#crops_table tr.selected").remove();
+}
+
+function requestAnimal(){
+  var type = 'ANIMAL';
+  var nm = $("#animalname").val();
+  $.post( "/requestAnimal", { type: type, nm: nm } );
+}
+
+function requestCrop(){
+  var type = $("#crop_type_selector option:selected").attr('id');
+  var nm = $("#cropname").val();
+
+  $.post( "/requestCrop", { type: type, nm: nm } );
+}
+
 function deleteVisitor() {
     var v = $("#visitorTable tr.selected").attr('id');
     if(v == null){
@@ -78,6 +107,37 @@ function manageProperty(tableName){
   } else {
     document.cookie = "PropertyID=" + id;
     window.location.href ="http://localhost:5000/manageProperty";
+  }
+}
+
+function saveChanges(){
+  var myanimals = [];
+  var mycrops = [];
+
+  name = $('#farm_name').val();
+  type = $('#type_farm').val();
+  street = $('#address_input').val();
+  city = $('#city_input').val();
+  zip = $('#zip_input').val();
+  size = $('#size_address_input').val();
+  commercial = $('#is_commercial_selector option:selected').attr('id');
+  publicc = $('#is_public option:selected').attr('id');
+  $('#animals_table tr').each(function(){
+    $(this).find('td').each(function(){
+        myanimals.push($(this).html());
+    })
+  })
+  $('#crops_table tr').each(function(){
+    $(this).find('td').each(function(){
+        mycrops.push($(this).html());
+    })
+  })
+  var r = confirm("Are you sure you want to save the changes?");
+  if(r == true){
+    alert("Your changes have been saved");
+    $.post("/updateInfo", {name: name, type: type, street: street, city: city, zip: zip, size: size, commercial: commercial, publicc: publicc, 'animals[]': myanimals, 'crops[]': mycrops});
+  } else{
+    alert("Your changes have not been saved.");
   }
 }
 

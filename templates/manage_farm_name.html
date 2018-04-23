@@ -6,7 +6,8 @@
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="tableSelect.js"></script>
 	<title>Manage Property</title>
 
 </head>
@@ -19,22 +20,48 @@
 
 
 		<label id="name" style="  position: relative; left: 200px"><strong>Name: </strong></label>
-		<input type="text" name="farm_name" value="{{result["Name"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text"  id="farm_name" value="{{result["Name"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<label id="type" style="position: relative; left: 400px"><strong>Type: </strong></label>
 
-		<input type="text" name="type_farm" value="{{result["PropertyType"]}}" style="position: relative; left: 410px; height: 30px; width: 200px">
+		<input type="text" id="type_farm" value="{{result["PropertyType"]}}" style="position: relative; left: 410px; height: 30px; width: 200px">
 
+      <table id="crops_table" align="right">
+
+    <tr>
+      <th>Crops</th>
+    </tr>
+
+    {% for crop in crops %}
+    <tr onclick="tableSelect(this);" id="{{crop['Name']}}">
+      <td>{{crop["Name"]}}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+
+  <table id="animals_table" align="right">
+
+    <tr>
+      <th>Animals</th>
+    </tr>
+    {% for animal in animals %}
+    <tr onclick="tableSelect(this);" id="{{animal['Name']}}">
+      <td>{{animal["Name"]}}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
 		<pre></pre>
 
 		<label id="address" style="  position: relative; left: 200px"><strong>Address: </strong></label>
-		<input type="text" value="{{result["Street"]}}" name="address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text" value="{{result["Street"]}}" id="address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<label id="is_public" style="  position: relative; left: 400px"><strong>Public: </strong></label>
 		<select name="is_public" id="is_public" style="position: relative; left: 410px; height: 30px;" >
 
-			<option value="False">False</option>
-			<option value="True">True</option>
+			<option id="No">No</option>
+			<option id="Yes">Yes</option>
 
 
 		</select>
@@ -44,13 +71,13 @@
 
 
 		<label id="city" style="  position: relative; left: 200px"><strong>City: </strong></label>
-		<input type="text" value="{{result["City"]}}" name="city_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text" value="{{result["City"]}}" id="city_input" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<label id="is_commercial" style="  position: relative; left: 400px"><strong>Commercial: </strong></label>
 		<select name="is_commercial_selector" id="is_commercial_selector" style="position: relative; left: 410px; height: 30px" >
 
-			<option value="False">False</option>
-			<option value="True">True</option>
+			<option id="No">No</option>
+			<option id="Yes">Yes</option>
 
 
 		</select>
@@ -58,20 +85,20 @@
 		<pre></pre>
 
 		<label id="zip" style="  position: relative; left: 200px"><strong>Zip: </strong></label>
-		<input type="text" name="zip_input" value="{{result["Zip"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text" id="zip_input" value="{{result["Zip"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<label id="ID" style="  position: relative; left: 400px"><strong>ID: {{result["ID"]}}</strong></label>
 
 		<pre></pre>
 
 		<label id="size_acres" style="  position: relative; left: 200px"><strong>Size(acres): </strong></label>
-		<input type="text" value="{{result["Size"]}}"name="size_address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text" value="{{result["Size"]}}"id="size_address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<!-- Here goes until animals. I need to create the remaining ones now -->
 
 		<pre></pre>
 		<pre></pre>
-
+<!--
 		<label id="animals_check" style="  position: relative; left: 200px"><strong>Animals: </strong></label>
 
 		<select name="animal_selector" id="animal_selector" style="position: relative; left: 210px; height: 30px" >
@@ -89,7 +116,7 @@
 			<option value="{{crop["Name"]}}">{{crop["Name"]}}</option>
       {% endfor %}
 
-		</select>
+		</select> -->
 
 		<pre></pre>
 
@@ -105,7 +132,7 @@
 
 		<label id="add_new_crop" style="  position: relative; left: 330px"><strong>Add new crop: </strong></label>
 
-		<select  name="approved_crop_selector" id="approved_ccrop_selector" style="position: relative; left: 340px; height: 30px">
+		<select  name="approved_crop_selector" id="approved_crop_selector" style="position: relative; left: 340px; height: 30px">
 
 			<option value="select_approved_animal" disabled selected hidden>Select approved crop...</option>
       {% for crop in crops_approved %}
@@ -116,19 +143,54 @@
 
 		<pre></pre>
 
-		<button id="add_animal_button" style="position: relative; left: 330px">Add Animal to Property</button>
+		<button id="add_animal_button" onclick="addAnimal();" style="position: relative; left: 330px">Add Animal to Property</button>
 
-		<button  id="add_crop_button" style="position: relative; left: 530px">Add Crop to Property</button>
+		<button  id="add_crop_button" onclick="addCrop();" style="position: relative; left: 530px">Add Crop to Property</button>
+    <button id="delete_crop" onclick="deleteCrop();" style="float: right; background: red">Delete Crop</button>
+    <button id="delete_animal" onclick="deleteAnimal();" style="float: right ; background: red">Delete Animal</button>
+		<pre></pre>
+
+    <pre></pre>
+    		<pre></pre>
+    		<pre></pre>
+
+    		<label id="request_crop_approval" style="  position: relative; left: 150px"><strong>Request Crop Approval: </strong></label>
+    		<input type="text" id="cropname" name="enter_new_crop_name" placeholder="Enter New Crop Name" style="position: relative; left: 160px; height: 30px; width: 200px">
+
+    		<select  name="crop_type_selector" id="crop_type_selector" style="position: relative; left: 170px; height: 30px">
+
+    			<option value="new_crop_type" disabled selected hidden>New Crop Type...</option>
+          <option id="fruit">Fruit</option>
+          <option id="flower">Flower</option>
+          <option id="nut">Nut</option>
+          <option id="vegetable">Vegetable</option>
+    		</select>
+
+
+    		<label id="request_animal_approval" style="  position: relative; left: 300px"><strong>Request Animal Approval: </strong></label>
+    		<input type="text" id="animalname" name="enter_new_animal_name" placeholder="Enter New Animal Name" style="position: relative; left: 310px; height: 30px; width: 200px">
+
+    		<!-- <select  name="animal_type_selector" id="animal_type_selector" style="position: relative; left: 320px; height: 30px">
+
+    			<option value="new_crop_type" disabled selected hidden>New Animal Type...</option>
+
+    		</select> -->
+
+    		<pre></pre>
+
+    		<button  id="submit_crop_request_button" onclick="requestCrop();" style="position: relative; left: 360px"><strong>Submit Request</strong></button>
+    		<button  id="submit_animal_request_button" onclick="requestAnimal();" style="position: relative; left: 880px"><strong>Submit Request</strong></button>
+
+    		<pre></pre>
+    		<pre></pre>
+
+		<button  id="save_changes_button" onclick="saveChanges();"style="position: relative; left: 500px"><strong>Save Changes</strong></button>
 
 		<pre></pre>
 
-		<button  id="save_changes_button" style="position: relative; left: 500px"><strong>Save Changes</strong> (confirm property)</button>
+		<button  id="back_button" onclick="return window.location.href ='http://localhost:5000/OWNER';" style="position: relative; left: 500px"><strong>Back</strong></button>
 
-		<pre></pre>
-
-		<button  id="back_button" onclick="return window.location.href ='http://localhost:5000/ADMIN';" style="position: relative; left: 500px"><strong>Back</strong> (Do not Save or Confirm)</button>
-
-		<button  id="delete_property" style="position: relative; left: 700px; background: red"><strong> Delete Property</strong></button>
+		<button  id="delete_property" onclick="$.post('/deleteProperty');" style="position: relative; left: 700px; background: red"><strong> Delete Property</strong></button>
 
 
 

@@ -196,6 +196,60 @@ def manage_property():
     conn.close()
     return render_template("manage_farm_name.html", result=result, animals=animals, crops=crops, crops_approved = crops_approved, animals_approved=animals_approved)
 
+@app.route('/updateInfo', methods=['POST'])
+def update_info():
+    pid = request.cookies.get('PropertyID')
+    print(request.form)
+    msg = request.form
+    for a in msg:
+        print(a.key())
+    # conn = connectDB()
+    # with conn.cursor() as cur:
+    #     sql = "DELETE FROM Property WHERE ID = %s"
+    #     cur.execute(sql, (pid))
+    # conn.commit()
+    # conn.close()
+    return redirect("/OWNER")
+
+@app.route('/deleteProperty', methods=['POST'])
+def delete_property():
+    pid = request.cookies.get('PropertyID')
+    conn = connectDB()
+    with conn.cursor() as cur:
+        sql = "DELETE FROM Property WHERE ID = %s"
+        cur.execute(sql, (pid))
+    conn.commit()
+    conn.close()
+    return redirect("/OWNER")
+
+@app.route('/requestAnimal', methods=['POST'])
+def request_animal():
+    msg = request.form
+    type = msg['type']
+    name = msg['nm']
+    conn = connectDB()
+    with conn.cursor() as cur:
+        sql = "INSERT INTO FarmItem (Name, IsApproved, Type) VALUES (%s, %s, %s)"
+        cur.execute(sql, (name,0,type))
+
+    conn.commit()
+    conn.close()
+    return redirect("/OWNER")
+
+@app.route('/requestCrop', methods=['POST'])
+def request_crop():
+    msg = request.form
+    type = msg['type']
+    name = msg['nm']
+    conn = connectDB()
+    with conn.cursor() as cur:
+        sql = "INSERT INTO FarmItem (Name, IsApproved, Type) VALUES (%s, %s, %s)"
+        cur.execute(sql, (name,0,type))
+
+    conn.commit()
+    conn.close()
+    return redirect("/OWNER")
+
 @app.route('/confirmedProperties', methods=['POST'])
 def confirmed_properties():
     sql = "SELECT Property.ID, Property.Name, Property.Street, Property.IsCommercial, Property.IsPublic, Property.City, Property.Zip, Property.PropertyType, Property.ApprovedBy, Property.Size,  Avg(Visit.Rating) as Rating from Property JOIN Visit ON Property.ID = Visit.PropertyID AND Property.ApprovedBy != 'NULL' Group By Property.ID"
@@ -328,7 +382,7 @@ def add_property():
 
 @app.route('/unconfirmedProperties', methods=['POST'])
 def unconfirmed_properties():
-    sql = "SELECT * from Property WHERE ApprovedBy = 'NULL'"
+    sql = "Select * from (SELECT User.Username, User.Email, User.UserType,count(Property.Owner) as Properties from User Left JOIN Property ON User.Username = Property.Owner Group By User.Username)p where p.UserType = 'OWNER'"
     conn = connectDB()
 
     with conn.cursor() as cur:
