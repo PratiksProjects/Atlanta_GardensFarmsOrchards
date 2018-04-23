@@ -199,16 +199,32 @@ def manage_property():
 @app.route('/updateInfo', methods=['POST'])
 def update_info():
     pid = request.cookies.get('PropertyID')
+    print(pid)
     print(request.form)
     msg = request.form
-    for a in msg:
-        print(a.key())
-    # conn = connectDB()
-    # with conn.cursor() as cur:
-    #     sql = "DELETE FROM Property WHERE ID = %s"
-    #     cur.execute(sql, (pid))
-    # conn.commit()
-    # conn.close()
+    print(msg["name"])
+    conn = connectDB()
+    with conn.cursor() as cur:
+        # sql = "UPDATE Property SET  Name=%s  WHERE ID = %s"
+        # cur.execute(sql, (msg["Name"],pid))
+        sql = "UPDATE Property SET  Size=%s  WHERE ID = %s"
+        cur.execute(sql, (msg["size"],pid))
+        # sql = "UPDATE Property SET  Street=%s  WHERE ID = %s"
+        # cur.execute(sql, (msg["street"],pid))
+        # sql = "UPDATE Property SET  City=%s  WHERE ID = %s"
+        # cur.execute(sql, (msg["city"],pid))
+        # sql = "UPDATE Property SET  Zip=%s  WHERE ID = %s"
+        # cur.execute(sql, (msg["zip"],pid))
+        # sql = "UPDATE Property SET  Type=%s  WHERE ID = %s"
+        # cur.execute(sql, (msg["type"],pid))
+        # sql = "UPDATE Property SET  IsPublic=%s  WHERE ID = %s"
+        # cur.execute(sql, (yesno_to_bool(msg["publicc"]),pid))
+        # sql = "UPDATE Property SET  IsCommercial=%s  WHERE ID = %s"
+        cur.execute(sql, (yesno_to_bool(msg["commercial"]),pid))
+        #sql = "UPDATE Property SET Name=%s, Size=%s, IsCommercial=%s, IsPublic=%s, Street=%s, City=%s, Zip=%s, PropertyType=%s WHERE ID = %s"
+        #cur.execute(sql, (msg["name"],msg["size"],msg["commercial"],msg["publicc"],msg["street"],msg["city"],msg["zip"],msg["type"], pid))
+    conn.commit()
+    conn.close()
     return redirect("/OWNER")
 
 @app.route('/deleteProperty', methods=['POST'])
@@ -382,13 +398,13 @@ def add_property():
 
 @app.route('/unconfirmedProperties', methods=['POST'])
 def unconfirmed_properties():
-    sql = "Select * from (SELECT User.Username, User.Email, User.UserType,count(Property.Owner) as Properties from User Left JOIN Property ON User.Username = Property.Owner Group By User.Username)p where p.UserType = 'OWNER'"
+    sql = "Select * from Property where ApprovedBy = '0' UNION Select * from Property where ApprovedBy = 'NULL'"
     conn = connectDB()
 
     with conn.cursor() as cur:
         cur.execute(sql)
         plist = cur.fetchall()
-
+    print(plist)
     conn.close()
     return render_template("unconfirmed_properties.html", plist=plist)
 

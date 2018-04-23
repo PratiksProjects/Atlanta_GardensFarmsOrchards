@@ -135,7 +135,7 @@ function saveChanges(){
   var r = confirm("Are you sure you want to save the changes?");
   if(r == true){
     alert("Your changes have been saved");
-    $.post("/updateInfo", {name: name, type: type, street: street, city: city, zip: zip, size: size, commercial: commercial, publicc: publicc, 'animals[]': myanimals, 'crops[]': mycrops});
+    $.post("/updateInfo", {name: name, type: type, street: street, city: city, zip: zip, size: size, commercial: commercial, publicc: publicc, 'animals[]': myanimals, 'crops': mycrops});
   } else{
     alert("Your changes have not been saved.");
   }
