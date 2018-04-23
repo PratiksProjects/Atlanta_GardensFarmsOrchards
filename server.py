@@ -220,6 +220,70 @@ def visit_history():
    conn.close()
    return render_template("visit_history.html", plist=plist)
 
+@app.route('/logUnlog', methods=['GET'])
+def log_unlog():
+   pid = request.cookies.get('PID')
+   global user_name
+   sql = "SELECT * FROM Visit WHERE PropertyID = %s AND Username = %s"
+   conn = connectDB()
+
+   with conn.cursor() as cur:
+       cur.execute(sql,(pid,user_name))
+       p = cur.fetchone()
+   conn.close()
+
+   sql = "SELECT * FROM User JOIN Property ON Property.Owner=User.Username AND Property.ID = %s"
+   sql2 = "SELECT Count(Username) as Visits, Avg(Rating) as Rating from Visit WHERE PropertyID = %s"
+   sql3 = "SELECT Has.ItemName, FarmItem.`Type` FROM FarmItem Join Has On FarmItem.Name=Has.ItemName AND Has.PropertyID = %s AND FarmItem.`Type` = 'ANIMAL'"
+   sql4 = "SELECT Has.ItemName, FarmItem.`Type` FROM FarmItem Join Has On FarmItem.Name=Has.ItemName AND Has.PropertyID = %s AND FarmItem.`Type` != 'ANIMAL'"
+   conn = connectDB()
+
+   with conn.cursor() as cur:
+       cur.execute(sql,(pid,))
+       pdetails = cur.fetchone()
+
+   with conn.cursor() as cur:
+       cur.execute(sql2,(pid,))
+       rating = cur.fetchone()
+
+   with conn.cursor() as cur:
+       cur.execute(sql3,(pid,))
+       animals = cur.fetchall()
+
+   with conn.cursor() as cur:
+       cur.execute(sql4,(pid,))
+       crops = cur.fetchall()
+   if(not p):
+       return render_template("garden_details_log2.html", pdetails=pdetails, rating=rating, animals=animals, crops=crops)
+   else:
+       return render_template("garden_details_unlog_2.html", pdetails=pdetails, rating=rating, animals=animals, crops=crops)
+
+@app.route('/logVisit', methods=['GET'])
+def log_visit():
+    rating =request.args['rating']
+    sql = "INSERT INTO Visit (Username, PropertyID, Rating) VALUES (%s,%s,%s)"
+    pid = request.cookies.get('PID')
+    conn = connectDB()
+    global user_name
+    with conn.cursor() as cur:
+        cur.execute(sql, (user_name, pid, rating))
+    conn.commit()
+    conn.close()
+    return redirect("/VISITOR")
+
+@app.route('/unlogVisit', methods=['GET'])
+def unlog_visit():
+    print("unlogging")
+    sql = "DELETE FROM Visit WHERE PropertyID =%s AND Username = %s"
+    pid = request.cookies.get('PID')
+    conn = connectDB()
+    global user_name
+    with conn.cursor() as cur:
+        cur.execute(sql, (pid, user_name))
+    conn.commit()
+    conn.close()
+    return redirect("/VISITOR")
+
 @app.route('/addPropertyView', methods=['GET'])
 def add_p_view():
     sql = "SELECT * from FarmItem WHERE IsApproved = 1 AND Type = 'ANIMAL'"

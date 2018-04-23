@@ -45,6 +45,20 @@ function deleteVisitor() {
     }
 }
 
+function logUnlog(){
+  var v = $("#ownerTable tr.selected").attr('id');
+  if(v == null){
+    alert("Please select a row");
+  } else {
+    document.cookie = "PID=" + v;
+    window.location.href ="http://localhost:5000/logUnlog";
+  }
+}
+
+function hello(){
+  alert("hello");
+}
+
 function deleteLog() {
     var v = $("#visitorTable tr.selected").attr('id');
     if(v == null){
