@@ -94,7 +94,7 @@
 		<pre></pre>
 
 		<label id="rate_your_visit" style=" color: red;"><strong>Rate Your Visit*: </strong></label>
-		<input type="number" max=5 min=0 maxlength="5" minlength="0" name="rating" >
+		<input type="number" max=5 min=0 maxlength="5" minlength="0" name="rating" required>
 
 		<pre></pre>
 		<pre></pre>
@@ -102,7 +102,7 @@
 		<button id="log_visit" type='submit' formaction="/logVisit">Log Visit</button>
 
 		<pre></pre>
-		<button id="Back" onclick="return window.location.href ='http://localhost:5000/VISITOR';" style=" background: red">Back</button>
+		<button style="position: relative; background: red" type="submit" formaction="/VISITOR">Back</button>
 
 
 			<!-- <button>Cancel</button> -->
