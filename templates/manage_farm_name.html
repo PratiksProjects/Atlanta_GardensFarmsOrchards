@@ -88,14 +88,14 @@
 		<pre></pre>
 
 		<label id="zip" style="  position: relative; left: 200px"><strong>Zip: </strong></label>
-		<input type="text" id="zip_input" value="{{result["Zip"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text" id="zip_input" onkeypress="checkNumbers('zip_input');" value="{{result["Zip"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<label id="ID" style="  position: relative; left: 400px"><strong>ID: {{result["ID"]}}</strong></label>
 
 		<pre></pre>
 
 		<label id="size_acres" style="  position: relative; left: 200px"><strong>Size(acres): </strong></label>
-		<input type="text" value="{{result["Size"]}}"id="size_address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
+		<input type="text" onkeypress="checkNumbers('size_address_input');" value="{{result["Size"]}}"id="size_address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
 
 		<!-- Here goes until animals. I need to create the remaining ones now -->
 

@@ -60,8 +60,14 @@ def login():
             global user_name
             user_name = msg['username']
             return resp
+        else:
+            return redirect("/loginError")
     else:
-        return redirect("/")
+        return redirect("/loginError")
+
+@app.route('/loginError', methods=['GET'])
+def login_error():
+    return render_template("login_error.html")
 
 @app.route('/VISITOR', methods=['GET'])
 def visitor_profile():
@@ -120,6 +126,23 @@ def register_owner():
     conn = connectDB()
     h = hashlib.md5()
     msg = request.form
+
+    ##check if exists
+    name = msg["username"]
+    email= msg["email"]
+    with conn.cursor() as cur:
+        sql = "SELECT * FROM User WHERE Email=%s"
+        cur.execute(sql, (email,))
+        result = cur.fetchone()
+    if(result is not None):
+        return render_template("new_owner_registration_error_email.html")
+    with conn.cursor() as cur:
+        sql = "SELECT * FROM User WHERE Username=%s"
+        cur.execute(sql, (name,))
+        result = cur.fetchone()
+    if(result is not None):
+        return render_template("new_owner_registration_error_user.html")
+    ##
     pw = msg['password']
     h.update(pw)
     try:
@@ -147,6 +170,23 @@ def register_visitor():
     conn = connectDB()
     msg = request.form
     pw = msg['password']
+
+    ##check if exists
+    name = msg["username"]
+    email= msg["email"]
+    with conn.cursor() as cur:
+        sql = "SELECT * FROM User WHERE Email=%s"
+        cur.execute(sql, (email,))
+        result = cur.fetchone()
+    if(result is not None):
+        return render_template("new_visitor_registration_error_email.html")
+    with conn.cursor() as cur:
+        sql = "SELECT * FROM User WHERE Username=%s"
+        cur.execute(sql, (name,))
+        result = cur.fetchone()
+    if(result is not None):
+        return render_template("new_visitor_registration_error_user.html")
+    ##
     h.update(pw)
     password = str(h.hexdigest())
     try:
@@ -197,14 +237,19 @@ def manage_property():
 
 @app.route('/updateInfo', methods=['POST'])
 def update_info():
+    usertype = request.cookies.get('type')
+    global user_name
+    approvedby = "NULL"
+    if(usertype == "ADMIN"):
+        approvedby = user_name
     pid = request.cookies.get('PropertyID')
     msg = request.form.to_dict(flat=False)
     conn = connectDB()
     commercial = yesno_to_bool(msg["commercial"][0])
     publicc = yesno_to_bool(msg["publicc"][0])
     with conn.cursor() as cur:
-        sql = "UPDATE Property SET Name=%s, Size=%s, IsCommercial=%s, IsPublic=%s, Street=%s, City=%s, Zip=%s, ApprovedBy='NULL' WHERE ID = %s"
-        cur.execute(sql, (msg["name"],msg["size"],commercial,publicc,msg["street"],msg["city"],msg["zip"], pid))
+        sql = "UPDATE Property SET Name=%s, Size=%s, IsCommercial=%s, IsPublic=%s, Street=%s, City=%s, Zip=%s, ApprovedBy=%s WHERE ID = %s"
+        cur.execute(sql, (msg["name"],msg["size"],commercial,publicc,msg["street"],msg["city"],msg["zip"],approvedby, pid))
     conn.commit()
     conn.close()
     return redirect("/OWNER")

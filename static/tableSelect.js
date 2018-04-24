@@ -15,6 +15,12 @@ function hideAnimals(){
   }
 }
 
+function checkNumbers(name){
+  if(isNaN($("#"+name).val())){
+    alert("Only numbers allowed for this field");
+  }
+}
+
 function getCookie(name) {
     var dc = document.cookie;
     var prefix = name + "=";
