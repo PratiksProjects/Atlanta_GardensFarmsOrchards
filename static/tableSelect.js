@@ -67,6 +67,47 @@ function findSelected(){
   alert($("#ownerTable tr.selected td:first").html());
 }
 
+function rangeCheck(){
+  if($("#toSearch option:selected").val() == "Visits" || $("#toSearch option:selected").val() == "Rating"){
+    $("#min").show();
+    $("#minLabel").show();
+    $("#max").show();
+    $("#maxLabel").show();
+    $("#minmaxbut").show();
+  } else {
+    $("#min").hide();
+    $("#minLabel").hide();
+    $("#max").hide();
+    $("#maxLabel").hide();
+    $("#minmaxbut").hide();
+  }
+}
+
+function minMax(tableID) {
+  var col = $("#toSearch option:selected").attr('id');
+  if(col == null){
+    alert("Please select a search index.");
+  } else {
+    var input, filter, table, tr, td, i;
+    min = $("#min").val();
+    max = $("#max").val();
+    console.log(min);
+    console.log(max);
+    table = document.getElementById(tableID);
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[col];
+      if (td) {
+        if (parseFloat(td.innerHTML) >= min && parseFloat(td.innerHTML) <= max) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+}
+
 function search(tableID) {
   var col = $("#toSearch option:selected").attr('id');
   if(col == null){
