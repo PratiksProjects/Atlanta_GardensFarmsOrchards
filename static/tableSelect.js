@@ -5,6 +5,58 @@ function tableSelect(val){
     //alert(value);
 }
 
+function hideAnimals(){
+  if($("#propertyType_selector option:selected").val() != "Farm"){
+    $("#animal_type").hide();
+    $("#animal_selector").hide();
+  } else {
+    $("#animal_type").show();
+    $("#animal_selector").show();
+  }
+}
+
+function getCookie(name) {
+    var dc = document.cookie;
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    }
+    else
+    {
+        begin += 2;
+        var end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+        end = dc.length;
+        }
+    }
+    return decodeURI(dc.substring(begin + prefix.length, end));
+}
+
+function checkAdmin(){
+    var myCookie = getCookie("type");
+
+    if(myCookie == "ADMIN"){
+      $("#request_crop_approval").hide();
+      $("#cropname").hide();
+      $("#crop_type_selector").hide();
+      $("#submit_crop_request_button").hide();
+      $("#request_animal_approval").hide();
+      $("#animalname").hide();
+      $("#submit_animal_request_button").hide();
+    }
+}
+
+
+function hideAnimalsRegister(){
+  if($("#propertyType_selector option:selected").val() != "Farm"){
+    $("#animal_selector").hide();
+  } else {
+    $("#animal_selector").show();
+  }
+}
+
 function findSelected(){
   alert($("#ownerTable tr.selected td:first").html());
 }
@@ -109,7 +161,6 @@ function manageProperty(tableName){
     window.location.href ="http://localhost:5000/manageProperty";
   }
 }
-
 function saveChanges(){
   var myanimals = [];
   var mycrops = [];

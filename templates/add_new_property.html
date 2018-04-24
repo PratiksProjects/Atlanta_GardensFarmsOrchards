@@ -6,7 +6,8 @@
 	<link  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 	<link rel="stylesheet" type="text/css" href="unconfirmed_properties.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="tableSelect.js"></script>
 	<title>Add New Property</title>
 
 </head>
@@ -42,7 +43,7 @@
 		<pre></pre>
 
 		<label id="property_type" style="  position: relative; left: 200px"><strong>Property Type*: </strong></label>
-			<select name="propertyType" style=" position: relative;   width: 160px;height: 50px; left: 210px" required>
+			<select name="propertyType" onchange="hideAnimals();" id= "propertyType_selector" style=" position: relative;   width: 160px;height: 50px; left: 210px" required>
 								<option value="Search_by" disabled selected hidden>Select Property...*</option>
 								<option value="Farm">Farm</option>
 								<option value="Garden">Garden</option>
@@ -51,7 +52,7 @@
 			</select>
 
 		<label id="animal_type" style="  position: relative; left: 400px"><strong>Animal*: </strong></label>
-			<select name="animal" style=" position: relative;   width: 160px;height: 50px; left: 410px" required>
+			<select name="animal" id="animal_selector" style=" position: relative;   width: 160px;height: 50px; left: 410px" required>
 								<option value="select_animal" disabled selected hidden>Select Animal...*</option>
                 {% for animal in animals %}
                 <option value="{{animal["Name"]}}">{{animal["Name"]}}</option>

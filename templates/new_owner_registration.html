@@ -7,6 +7,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="new_owner_reg.css">
 	<script src="passwordCheck.js"></script>
+	<script src="tableSelect.js"></script>
 	<title>New Owner Registration</title>
 
 </head>
@@ -52,15 +53,15 @@
 			<div class="dropdown">
 
 
-					<select name="propertyType" required>
+					<select id="propertyType_selector" name="propertyType" onchange="hideAnimalsRegister();" required>
 							<option value="Property Type" disabled selected hidden>Property Type*</option>
 							<option value="Farm">Farm</option>
 							<option value="Garden">Garden</option>
-							<option value="Crop">Crop</option>
+							<option value="Orchard">Orchard</option>
 					</select>
 
 
-					<select name="animalType" required="" >
+					<select id="animal_selector" name="animalType" required="" >
 							<option value="animalType" disabled selected hidden>Animal Type*</option>
 							<option value="Cows">Cows</option>
 							<option value="Pigs">Pigs</option>

@@ -14,7 +14,12 @@
 
 
 <body>
-
+ <script>
+ $( document ).ready(function() {
+    console.log( "ready!" );
+		checkAdmin();
+});
+ </script>
 	<div class="centerImg">
 		<p align="center" class="init_page"><strong>Manage {{result["Name"]}}</strong></p>
 
@@ -22,9 +27,7 @@
 		<label id="name" style="  position: relative; left: 200px"><strong>Name: </strong></label>
 		<input type="text"  id="farm_name" value="{{result["Name"]}}" style="position: relative; left: 210px; height: 30px; width: 200px">
 
-		<label id="type" style="position: relative; left: 400px"><strong>Type: </strong></label>
-
-		<input type="text" id="type_farm" value="{{result["PropertyType"]}}" style="position: relative; left: 410px; height: 30px; width: 200px">
+		<label id="type" style="position: relative; left: 400px"><strong>Type: {{result["PropertyType"]}}</strong></label>
 
       <table id="crops_table" align="right">
 
@@ -57,7 +60,7 @@
 		<label id="address" style="  position: relative; left: 200px"><strong>Address: </strong></label>
 		<input type="text" value="{{result["Street"]}}" id="address_input" style="position: relative; left: 210px; height: 30px; width: 200px">
 
-		<label id="is_public" style="  position: relative; left: 400px"><strong>Public: </strong></label>
+		<label style="  position: relative; left: 400px"><strong>Public: </strong></label>
 		<select name="is_public" id="is_public" style="position: relative; left: 410px; height: 30px;" >
 
 			<option id="No">No</option>
@@ -119,7 +122,21 @@
 		</select> -->
 
 		<pre></pre>
-
+ 		<script>
+			$( document ).ready(function() {
+	    	console.log( "ready!" );
+				if($("#type").html() != "<strong>Type: FARM</strong>"){
+					$("#add_new_animal").hide();
+					$("#approved_animal_selector").hide();
+					$("#add_animal_button").hide();
+					$("#submit_animal_request_button").hide();
+					$("#animalname").hide();
+					$("#request_animal_approval").hide();
+					$("#delete_animal").hide();
+					$("#animals_table").hide();
+				}
+			});
+		</script>
 		<label id="add_new_animal" style="  position: relative; left: 200px"><strong>Add new Animal: </strong></label>
 
 		<select  name="approved_animal_selector" id="approved_animal_selector" style="position: relative; left: 210px; height: 30px">
